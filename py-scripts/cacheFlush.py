@@ -1,8 +1,8 @@
 import os, shutil
 
-cacheDir = "__pycache__"
+path = "C:/Users/paul.leroyducardonno/Desktop/Hot_Projects/FileBeat/"
 
 def cacheFlush():
-    if os.path.isdir(cacheDir):
+    if os.path.isdir(path+"FilebeatToCloud/py-scripts/__pycache__"):
 
-        shutil.rmtree(cacheDir)
+        shutil.rmtree(path+"FilebeatToCloud/py-scripts/__pycache__")
