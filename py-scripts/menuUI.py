@@ -47,24 +47,27 @@ def menuUi():
 
   indexLabel = Label(fenetre, text="Kibana index name",pady=10).grid(row=3, column=4)
   index = Entry(fenetre, textvariable=str, width=30)
-  fileExtentionLabel = Label(fenetre, text="File extention").grid(row=4, column=4)
+  fileExtentionLabel = Label(fenetre, text="File extension").grid(row=4, column=4)
   fileExtention = Entry(fenetre, textvariable=str, width=30)
   logTypeLabel = Label(fenetre, text="Copy and paste a sample of your logs down there : ").grid(row=5, column=4)
-  message = Text(fenetre, bg="light grey", font=("black", 10), height=30, width=100, padx=20, pady=20)
+  logSample = Text(fenetre, bg="light grey", font=("black", 10), height=30, width=100, padx=20, pady=20)
 
   def validateConfig():
-    print('test')
+    pathsArray = []
+    ListOfPaths = listPath.get('@1,0', 'end')
+    for path in ListOfPaths:
+      pathsArray.append(path)
+    print(elasticUsername.get(), elasticPassword.get(), elasticUrl.get(), pathsArray, index.get(), fileExtention.get(), logSample.get('@1,0', 'end'))
   
   elasticUsername.grid(row=3, column=1)
   elasticPassword.grid(row=4, column=1)
   elasticUrl.grid(row=5,column=1)
   index.grid(row=3, column=5)
   fileExtention.grid(row=4, column=5)
-  message.grid(row=6, column=4, columnspan=2, rowspan=5)
+  logSample.grid(row=6, column=4, columnspan=2, rowspan=5)
   hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=11, column=0, columnspan=6, sticky="ws")
   sendButton = Button(fenetre, text='Validate configuration', command=lambda: validateConfig(), width=50).grid(row=12, column=3, columnspan=2)
   hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=13, column=0, columnspan=6, sticky="ws")
-
 
   fenetre.mainloop()
 
@@ -76,3 +79,23 @@ def menuUi():
   #     - liste des path de logs --> Ok
   #     - intel recup champs + envoi dans script (Pas fait) de modifcation de filebeat.yml
   #     - BONUS : type de fichier de logs --> UI : OK, Intel : on verra
+          #   processors: 
+          #   - decode_csv_fields:
+          #       fields: 
+          #         message: decoded.csv 
+          #       separator: ";"
+          #   - extract_array:
+          #       field: decoded.csv
+          #       mappings:
+          #         parsed.attribute1: 0
+          #         parsed.attribute2: 1
+          #         parsed.attribute3: 2
+          #         parsed.attribute4: 3
+          #         parsed.attribute5: 4
+          #         parsed.attribute6: 5
+          #         parsed.attribute7: 6
+          #         parsed.attribute8: 7
+          #         parsed.attribute9: 8
+          #         parsed.attribute10: 9
+          #   - drop_fields:
+          #       fields: ["decoded"]

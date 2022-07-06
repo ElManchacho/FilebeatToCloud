@@ -5,26 +5,6 @@ filebeat.inputs:
   enabled: true
   paths:
     - 'path to log folder'
-  # processors: 
-  #   - decode_csv_fields:
-  #       fields: 
-  #         message: decoded.csv 
-  #       separator: ";"
-  #   - extract_array:
-  #       field: decoded.csv
-  #       mappings:
-  #         parsed.attribute1: 0
-  #         parsed.attribute2: 1
-  #         parsed.attribute3: 2
-  #         parsed.attribute4: 3
-  #         parsed.attribute5: 4
-  #         parsed.attribute6: 5
-  #         parsed.attribute7: 6
-  #         parsed.attribute8: 7
-  #         parsed.attribute9: 8
-  #         parsed.attribute10: 9
-  #   - drop_fields:
-  #       fields: ["decoded"]
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
