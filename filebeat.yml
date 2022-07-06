@@ -4,8 +4,7 @@ filebeat.inputs:
 
   enabled: true
   paths:
-    - 'C:\Users\paul.leroyducardonno\Desktop\Hot Projects\FileBeat\Logs\Input\input*\*.csv'
-    - 'C:\Users\paul.leroyducardonno\Desktop\Hot Projects\FileBeat\Logs\Input\input*\*.txt'
+    - 'path to log folder'
   # processors: 
   #   - decode_csv_fields:
   #       fields: 
