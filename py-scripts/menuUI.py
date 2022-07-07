@@ -9,7 +9,7 @@ def menuUi():
 
   hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=0, columnspan=6, sticky="ws")
 
-  mainTitle = Label(fenetre, text="Configure your Filebeat envirionnement",font='bold').grid(row=1, column=0, columnspan=3)
+  mainTitle = Label(fenetre, text="Configure your Filebeat environnement",font='bold').grid(row=1, column=0, columnspan=3)
 
   hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=2, column=0, columnspan=6, sticky="ws")
 
