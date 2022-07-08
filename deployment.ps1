@@ -18,6 +18,12 @@ Start-Sleep -s 10
 
 Remove-Item $location"\filebeat-8.3.1-windows-x86_64.zip"
 
+# replace filebeat.yml from unzipped folder with almost ready filebeat file
+
+Remove-Item $location"\filebeat-8.3.1-windows-x86_64\filebeat.yml"
+
+Copy-Item -Path $location"\filebeat.yml" -Destination $location"\filebeat-8.3.1-windows-x86_64\filebeat.yml"
+
 # download python 3.10.5 (last version on 08/07/2022)
 
 Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.10.5/python-3.10.5-amd64.exe" -OutFile $location"\python-3.10.5-amd64.exe"

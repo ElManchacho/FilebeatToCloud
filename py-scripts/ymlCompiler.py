@@ -1,15 +1,33 @@
-import sys
-#import yaml
+import sys, yaml, os
 
-def ymlComipler():
+def ymlComipler(input):
 
-    # yaml = yaml.YAML()
-    # # yaml.preserve_quotes = True
-    # with open('input.yaml') as fp:
-    #     data = yaml.load(fp)
-    # for elem in data:
-    #     if elem['name'] == 'sense2':
-    #         elem['value'] = 1234
-    #         break  # no need to iterate further
-    # yaml.dump(data, sys.stdout)
-    print("test")
+    filebeatPath = '../filebeat.yml'
+
+    content = None
+
+    with open(filebeatPath) as file:
+
+        optionList = yaml.load(file, Loader=yaml.FullLoader)
+        paths = []
+        if (input["username"]) :
+            optionList["output.elasticsearch"]["username"] = input["username"]
+        else :
+            optionList["output.elasticsearch"]["username"] = 'elastic'
+        
+        optionList["output.elasticsearch"]["password"] = input["password"]
+        optionList["output.elasticsearch"]["hosts"] = input["hosts"]
+        optionList["output.elasticsearch"]["index"] = input["index"]
+        if (input["paths"] != []) :
+            extension = input["extension"]
+            for path in input["paths"]:
+                paths.append(path+extension)
+        else :
+            paths = [os.getcwd().replace('py-scripts','Logs\\input\\*.txt')]
+        optionList["filebeat.inputs"][0]["paths"]  = paths
+        content = optionList
+
+        file.close()
+
+    with open(r'../filebeat-8.3.1-windows-x86_64/filebeat.yml', 'w') as file:
+        documents = yaml.dump(content, file, sort_keys=False)
