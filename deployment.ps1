@@ -1,15 +1,14 @@
-# delete git config ?
+# define right powershell scipt env
 
+Invoke-WebRequest -Uri "https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1" -OutFile $location"\dotnet-install.ps1"
+
+# install python
+
+Start-Process -Wait -FilePath $location"\dotnet-install.ps1"  -Argument "/silent" -PassThru
 
 # unzip function instanciation
 
 Add-Type -AssemblyName System.IO.Compression
-function Unzip
-{
-    param([string]$zipfile, [string]$outpath)
-
-    [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)
-}
 
 # deployment folder location instanciation
 
@@ -17,7 +16,7 @@ $location = (Get-Location).Path
 
 # unzip filbeat
 
-Unzip $location"\filebeat-8.3.1-windows-x86_64.zip" $location
+Expand-Archive -Path $location"\filebeat-8.3.1-windows-x86_64.zip" -DestinationPath $location
 
 # let time to unzip folder
 
