@@ -1,11 +1,3 @@
-# define right powershell scipt env
-
-Invoke-WebRequest -Uri "https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1" -OutFile $location"\dotnet-install.ps1"
-
-# install python
-
-Start-Process -Wait -FilePath $location"\dotnet-install.ps1"  -Argument "/silent" -PassThru
-
 # unzip function instanciation
 
 Add-Type -AssemblyName System.IO.Compression
