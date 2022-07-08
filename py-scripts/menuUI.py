@@ -68,18 +68,17 @@ def menuUi():
       "extension": fileExtension.get(), 
       "sample": logSample.get('@1,0', 'end')
     }
-    #ymlComipler(dicoInput)
-    subprocess.Popen(["powershell.exe",'Stop-Service filebeat'],stdout=sys.stdout)
-    time.sleep(5)
-    path = os.getcwd().replace('py-scripts','filebeat-8.3.1-windows-x86_64\\uninstall-service-filebeat.ps1')
-    time.sleep(5)
-    path = os.getcwd().replace('py-scripts','filebeat-8.3.1-windows-x86_64\\install-service-filebeat.ps1')
-    time.sleep(5)
+    ymlComipler(dicoInput)
+    
+    path = os.getcwd()+'\\filebeat-8.3.1-windows-x86_64\\install-service-filebeat.ps1'
     subprocess.Popen(["powershell.exe",path],stdout=sys.stdout)
     time.sleep(5)
+
     subprocess.Popen(["powershell.exe",'Start-Service filebeat'],stdout=sys.stdout)
     time.sleep(5)
+    
     fenetre.destroy()
+    
   elasticUsername.grid(row=3, column=1)
   elasticPassword.grid(row=4, column=1)
   elasticUrl.grid(row=5,column=1)

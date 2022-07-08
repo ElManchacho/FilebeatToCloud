@@ -1,10 +1,18 @@
-# unzip function instanciation
-
-Add-Type -AssemblyName System.IO.Compression
-
 # deployment folder location instanciation
 
 $location = (Get-Location).Path
+
+# unistall existing filebeat service
+
+Invoke-Expression -Command $location"\filebeat-8.3.1-windows-x86_64\uninstall-service-filebeat.ps1"
+
+# remove existing installation
+
+Remove-Item -Recurse -Force $location"\filebeat-8.3.1-windows-x86_64"
+
+# unzip function instanciation
+
+Add-Type -AssemblyName System.IO.Compression
 
 # unzip filbeat
 
@@ -13,10 +21,6 @@ Expand-Archive -Path $location"\filebeat-8.3.1-windows-x86_64.zip" -DestinationP
 # let time to unzip folder
 
 Start-Sleep -s 10
-
-# remove filebeat zip folder
-
-Remove-Item $location"\filebeat-8.3.1-windows-x86_64.zip"
 
 # replace filebeat.yml from unzipped folder with almost ready filebeat file
 
@@ -78,13 +82,5 @@ Remove-Item $location"\python-3.10.5-amd64.exe"
 pip install pyyaml
 
 py "./py-scripts/main.py" -Wait
-
-# remplacer le .yaml
-
-# script d'instanciation du service filebeat blablabla.ps1
-
-# start service
-
-# générer des logs basiques pour faire un tests de création d'index
 
 # renvoyer vers le cloud ou kibana
