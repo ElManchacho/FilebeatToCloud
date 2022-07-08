@@ -1,5 +1,7 @@
+import imp
 from tkinter import *
 from tkinter import ttk
+from ymlCompiler import ymlComipler
 
 
 def menuUi():
@@ -58,7 +60,11 @@ def menuUi():
     for path in ListOfPaths:
       pathsArray.append(path)
     print(elasticUsername.get(), elasticPassword.get(), elasticUrl.get(), pathsArray, index.get(), fileExtention.get(), logSample.get('@1,0', 'end'))
-  
+    ymlComipler()
+
+
+
+
   elasticUsername.grid(row=3, column=1)
   elasticPassword.grid(row=4, column=1)
   elasticUrl.grid(row=5,column=1)
