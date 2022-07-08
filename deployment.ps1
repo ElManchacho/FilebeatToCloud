@@ -1,21 +1,23 @@
-# delete git config
+# delete git config ?
 
 
 
 # unzip
-Add-Type -AssemblyName System.IO.Compression.FileSystem
+Add-Type -AssemblyName System.IO.Compression
 function Unzip
 {
     param([string]$zipfile, [string]$outpath)
 
     [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)
 }
+$location = Get-Location
 
-Unzip "C:\Users\paul.leroyducardonno\Desktop\Hot_Projects\FileBeat\FilebeatToCloud\filebeat-8.3.1-windows-x86_64.zip" "C:\Users\paul.leroyducardonno\Desktop\Hot_Projects\FileBeat\FilebeatToCloud" -Wait
+Unzip $location"\filebeat-8.3.1-windows-x86_64.zip" $location -Wait
 
 # installer python
-Wait-Job (Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.10.5/python-3.10.5-amd64.exe" -OutFile "C:\Users\paul.leroyducardonno\Desktop\Hot_Projects\FileBeat\FilebeatToCloud\python-3.10.5-amd64.exe") -AsJob -JobName PythonInstaller
-Wait-Job (Invoke-Expression -Command "C:\Users\paul.leroyducardonno\Desktop\Hot_Projects\FileBeat\FilebeatToCloud\python-3.10.5-amd64.exe") -AsJob -JobName PythonInstallation
+Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.10.5/python-3.10.5-amd64.exe" -OutFile $location"\python-3.10.5-amd64.exe"
+
+Start-Process -Wait -FilePath $location"\python-3.10.5-amd64.exe"  -Argument "/silent" -PassThru
 
 # script python pour demander des paramètres pour config le .yaml + lien vers cloud et/ou kibana
 
