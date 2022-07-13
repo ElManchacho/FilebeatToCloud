@@ -21,7 +21,7 @@ def menuUi():
   elasticPasswordLabel = Label(fenetre, text="Elastic password",pady=10).grid(row=4, column=0, sticky="ws")
   elasticPassword = Entry(fenetre, textvariable=str, width=30)
 
-  elasticUrlLabel = Label(fenetre, text="CLoud's Kibana URL",pady=10).grid(row=5, column=0, sticky="ws")
+  elasticUrlLabel = Label(fenetre, text="Elasticsearch endpoint",pady=10).grid(row=5, column=0, sticky="ws")
   elasticUrl = Entry(fenetre, textvariable=str, width=30)
 
   pathTitle = Label(fenetre, text="Path(s)",pady=10).grid(row=6, column=0, sticky="ws")
