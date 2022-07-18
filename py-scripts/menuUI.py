@@ -69,7 +69,7 @@ def menuUi():
       "sample": logSample.get('@1,0', 'end')
     }
     ymlComipler(dicoInput)
-    
+    return None
     path = os.getcwd()+'\\filebeat-8.3.1-windows-x86_64\\install-service-filebeat.ps1'
     subprocess.Popen(["powershell.exe",path],stdout=sys.stdout)
     time.sleep(5)
@@ -90,32 +90,3 @@ def menuUi():
   hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=13, column=0, columnspan=6, sticky="ws")
 
   fenetre.mainloop()
-
-  # get :
-  #     - elastic username (default : elastic) --> Ok
-  #     - elastic password --> Ok
-  #     - cloud kibana URI --> Ok
-  #     - nom index (default : index) --> En cours ....
-  #     - liste des path de logs --> Ok
-  #     - intel recup champs + envoi dans script (Pas fait) de modifcation de filebeat.yml
-  #     - BONUS : type de fichier de logs --> UI : OK, Intel : on verra
-          #   processors: 
-          #   - decode_csv_fields:
-          #       fields: 
-          #         message: decoded.csv 
-          #       separator: ";"
-          #   - extract_array:
-          #       field: decoded.csv
-          #       mappings:
-          #         parsed.attribute1: 0
-          #         parsed.attribute2: 1
-          #         parsed.attribute3: 2
-          #         parsed.attribute4: 3
-          #         parsed.attribute5: 4
-          #         parsed.attribute6: 5
-          #         parsed.attribute7: 6
-          #         parsed.attribute8: 7
-          #         parsed.attribute9: 8
-          #         parsed.attribute10: 9
-          #   - drop_fields:
-          #       fields: ["decoded"]

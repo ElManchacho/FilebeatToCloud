@@ -1,4 +1,6 @@
-import sys, yaml, os
+import yaml, os
+from formatAnalyser import formatAnalyser
+from fieldsSetUpUi import defFieldsUi
 
 def ymlComipler(input):
     basePath = os.getcwd().replace('py-scripts','')
@@ -23,12 +25,19 @@ def ymlComipler(input):
         if (input["paths"] != []) :
             extension = input["extension"]
             for path in input["paths"]:
-                paths.append(path+'\\*'+extension)
+                if '.' in extension :
+                    paths.append(path+'\\*'+extension)
+                else:
+                    paths.append(path+'\\*.'+extension)
         else :
             paths = [os.getcwd().replace('py-scripts','Logs\\input\\*.txt')]
         optionList["filebeat.inputs"][0]["paths"]  = paths
+        if (len(input["sample"]) != 1 and input["sample"] != ''):
+            fieldsFormat = formatAnalyser(input["extension"], input["sample"])
+            print(fieldsFormat)
+            defFieldsUi(fieldsFormat)
         content = optionList
-
+    
         file.close()
 
     with open(basePath+'/filebeat-8.3.1-windows-x86_64/filebeat.yml', 'w') as file:
