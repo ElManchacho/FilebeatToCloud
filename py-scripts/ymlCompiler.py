@@ -15,7 +15,10 @@ def ymlComipler(input):
             optionList["output.elasticsearch"]["username"] = 'elastic'
         
         optionList["output.elasticsearch"]["password"] = input["password"]
-        optionList["output.elasticsearch"]["hosts"] = input["hosts"]
+        hostUrl = input["hosts"]
+        if ':443' not in hostUrl :
+            hostUrl = input["hosts"]+':443'
+        optionList["output.elasticsearch"]["hosts"] = hostUrl
         optionList["output.elasticsearch"]["index"] = input["index"]
         if (input["paths"] != []) :
             extension = input["extension"]
