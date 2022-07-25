@@ -69,12 +69,14 @@ def menuUi():
       "sample": logSample.get('@1,0', 'end')
     }
     ymlComipler(dicoInput)
-    return None
     path = os.getcwd()+'\\filebeat-8.3.1-windows-x86_64\\install-service-filebeat.ps1'
     subprocess.Popen(["powershell.exe",path],stdout=sys.stdout)
     time.sleep(5)
 
     subprocess.Popen(["powershell.exe",'Start-Service filebeat'],stdout=sys.stdout)
+
+    subprocess.Popen(["powershell.exe",'Get-Service filebeat'],stdout=sys.stdout)
+
     time.sleep(5)
     
     fenetre.destroy()
