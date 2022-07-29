@@ -3,4 +3,5 @@
 # Python install (necessary to run scripts)
 python-3.10.5-amd64.exe
 __pycache__
-/Logs/Templates
+/Logs/Templates/*
+/Logs/input/*
