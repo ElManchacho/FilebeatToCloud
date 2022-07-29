@@ -29,16 +29,15 @@ def ymlComipler(input):
                     paths.append(path+'\\*'+extension)
                 else:
                     paths.append(path+'\\*.'+extension)
-        else :
-            paths = [os.getcwd().replace('py-scripts','Logs\\input\\*.txt')]
         optionList["filebeat.inputs"][0]["paths"]  = paths
         if (len(input["sample"]) != 1 and input["sample"] != ''):
-            fieldsFormat = formatAnalyser(input["extension"], input["sample"])
-            print(fieldsFormat)
-            defFieldsUi(fieldsFormat)
+            fieldsFormat = formatAnalyser(input["extension"], input["sample"], input["separator"])
+            if fieldsFormat["headersNumber"] != '' and fieldsFormat["headers"] != '' :
+                defFieldsUi(fieldsFormat)
+        
         content = optionList
     
         file.close()
 
-    with open(basePath+'/filebeat-8.3.1-windows-x86_64/filebeat.yml', 'w') as file:
-        documents = yaml.dump(content, file, sort_keys=False)
+#    with open(basePath+'/filebeat-8.3.1-windows-x86_64/filebeat.yml', 'w') as file:
+ #       documents = yaml.dump(content, file, sort_keys=False)

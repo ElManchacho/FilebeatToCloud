@@ -1,12 +1,12 @@
 from tkinter import *
 from tkinter import ttk
 
-def formatAnalyser(extension : str, sample : str):
+
+def formatAnalyser(extension: str, sample: str, separator: str):
+
     sampled = {
-        'headersNumber1':0,
-        'headers1':[],
-        'headersNumber2':0,
-        'headers2':[]
+        'headersNumber': 0,
+        'headers': ['']
     }
 
     lines = sample.split('\n')
@@ -16,31 +16,28 @@ def formatAnalyser(extension : str, sample : str):
         lines.remove('')
         if ('' not in lines):
             emptyLine = False
+
+    interpreted = None
     
-
     if 'csv' in extension:
-        headers = lines[0].split(';')
-        sampled["headersNumber1"] = len(headers)
-        sampled["headers1"] = headers
-        headers = lines[0].split(',')
-        sampled["headersNumber2"] = len(headers)
-        sampled["headers2"] = headers
-
+        if separator == "":
+            interpreted = interpret(lines, ";")
+        else:
+            interpreted = interpret(lines, separator)
+        sampled["headersNumber"] = interpreted["headersNumber"]
+        sampled["headers"] = interpreted["headers"]
     else:
-        def separatorWindowUi():
-            separatorWindow = Tk()
-            separatorWindow.title("FileBeatConfigurator")
-            mainTitle = Label(separatorWindow, text="Set up your log field separator",font='bold').grid(row=1, column=0, columnspan=3)
-            hr1 = ttk.Separator(separatorWindow, orient="horizontal").grid(pady=6, row=2, column=0, columnspan=3, sticky="ws")
-            separatorInput = Entry(separatorWindow, textvariable=str, width=30)
-            def validateSeparator():
-                separator = separatorInput.get()
-                headers = lines[0].split(separator)     
-                sampled["headersNumber1"] = len(headers)
-                sampled["headers1"] = headers
-                return separatorWindow.destroy()
-            sendButton = Button(separatorWindow, text='Validate fields separator', command=lambda: validateSeparator(), width=50).grid(row=12, column=3, columnspan=2)
-            separatorInput.grid(row=7, column=0)
-        separatorWindowUi()
-    print(sampled["headersNumber1"])
+        if separator !="":
+            interpreted = interpret(lines, separator)
+            sampled["headersNumber"] = interpreted["headersNumber"]
+            sampled["headers"] = interpreted["headers"]
     return sampled
+
+def interpret(text, sep):
+    headers = text[0].split(sep)
+    if headers[-1] == '' :
+        headers.pop()
+    for i in range(len(headers)):
+        if headers[i]=='' or headers[i]==' ':
+            headers[i] = '<empty field>'
+    return {"headersNumber": len(headers), "headers": headers}

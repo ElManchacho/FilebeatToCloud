@@ -24,7 +24,11 @@ filebeat.inputs:
           parsed.stepMessage: 8
           parsed.stepId: 9
     - drop_fields:
-        fields: ["decoded"]
+        fields: ["decoded"]    
+    - script:
+        lang: javascript
+        id: "idScript"
+        file:  "pathScript"
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
