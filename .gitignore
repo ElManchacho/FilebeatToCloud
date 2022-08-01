@@ -5,3 +5,5 @@ python-3.10.5-amd64.exe
 __pycache__
 /Logs/Templates/*
 /Logs/input/*
+/filebeatScripts/generated/*
+.env

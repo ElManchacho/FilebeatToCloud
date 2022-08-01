@@ -77,9 +77,13 @@ Start-Sleep -s 10
 
 Remove-Item $location"\python-3.10.5-amd64.exe"
 
-# install pip package for python script purpose
+# install pip packages for python script purpose
 
 pip install pyyaml
+
+Start-Sleep -s 10
+
+pip install python-dotenv
 
 py "./py-scripts/main.py" -Wait
 

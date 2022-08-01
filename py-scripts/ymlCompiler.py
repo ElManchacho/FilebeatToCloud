@@ -1,6 +1,6 @@
 import yaml, os
 from formatAnalyser import formatAnalyser
-from fieldsSetUpUi import defFieldsUi
+from fieldsSetUpUi import defFields
 
 def ymlComipler(input):
     basePath = os.getcwd().replace('py-scripts','')
@@ -33,11 +33,13 @@ def ymlComipler(input):
         if (len(input["sample"]) != 1 and input["sample"] != ''):
             fieldsFormat = formatAnalyser(input["extension"], input["sample"], input["separator"])
             if fieldsFormat["headersNumber"] != '' and fieldsFormat["headers"] != '' :
-                defFieldsUi(fieldsFormat)
-        
+                fieldsSetUp = defFields()
+                fieldsSetUp.defFieldsUi(fieldsFormat)
+                mappingScript = fieldsSetUp.getPath()
+                optionList["filebeat.inputs"][0]["processors"][0]["script"] = mappingScript
         content = optionList
     
         file.close()
 
-#    with open(basePath+'/filebeat-8.3.1-windows-x86_64/filebeat.yml', 'w') as file:
- #       documents = yaml.dump(content, file, sort_keys=False)
+    with open(basePath+'/filebeat-8.3.1-windows-x86_64/filebeat.yml', 'w') as file:
+        documents = yaml.dump(content, file, sort_keys=False)
