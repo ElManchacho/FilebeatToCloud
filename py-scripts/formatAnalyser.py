@@ -6,7 +6,7 @@ def formatAnalyser(extension: str, sample: str, separator: str):
 
     sampled = {
         'headersNumber': 0,
-        'headers': ['']
+        'headers': []
     }
 
     lines = sample.split('\n')
@@ -34,10 +34,12 @@ def formatAnalyser(extension: str, sample: str, separator: str):
     return sampled
 
 def interpret(text, sep):
-    headers = text[0].split(sep)
-    if headers[-1] == '' :
-        headers.pop()
-    for i in range(len(headers)):
-        if headers[i]=='' or headers[i]==' ':
-            headers[i] = '<empty field>'
+    headers = []
+    if text != []:
+        headers = text[0].split(sep)
+        if headers[-1] == '' :
+            headers.pop()
+        for i in range(len(headers)):
+            if headers[i]=='' or headers[i]==' ':
+                headers[i] = '<empty field>'
     return {"headersNumber": len(headers), "headers": headers}

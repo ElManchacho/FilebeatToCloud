@@ -32,7 +32,14 @@ def ymlComipler(input):
         optionList["filebeat.inputs"][0]["paths"]  = paths
         if (len(input["sample"]) != 1 and input["sample"] != ''):
             fieldsFormat = formatAnalyser(input["extension"], input["sample"], input["separator"])
-            if fieldsFormat["headersNumber"] != '' and fieldsFormat["headers"] != '' :
+            if fieldsFormat["headersNumber"] != 0 and fieldsFormat["headers"] != [] :
+                fieldsSetUp = defFields()
+                fieldsSetUp.defFieldsUi(fieldsFormat)
+                mappingScript = fieldsSetUp.getPath()
+                optionList["filebeat.inputs"][0]["processors"][0]["script"] = mappingScript
+        else:
+            fieldsFormat = formatAnalyser(input["extension"], "", input["separator"])
+            if fieldsFormat["headersNumber"] == 0 and fieldsFormat["headers"] == [] :
                 fieldsSetUp = defFields()
                 fieldsSetUp.defFieldsUi(fieldsFormat)
                 mappingScript = fieldsSetUp.getPath()

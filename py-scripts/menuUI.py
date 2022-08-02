@@ -55,28 +55,6 @@ def menuUi():
 
   envCheckable = envChecked()
 
-  w = 1200
-  h = 700
-
-  ws = fenetre.winfo_screenwidth()
-  hs = fenetre.winfo_screenheight()
-
-  x = (ws / 2) - (w / 2)
-  y = (hs / 2) - (h / 1.8)
-
-  fenetre.geometry('%dx%d+%d+%d' % (w, h, x, y))
-
-  fenetre.title("FileBeatConfigurator")
-
-  hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=0, columnspan=6, sticky="ws")
-
-  mainTitle = Label(fenetre, text="Configure your Filebeat environnement",font=('bold', 20)).grid(row=1, column=0, columnspan=3)
-
-  hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=2, column=0, columnspan=6, sticky="ws")
-
-  elasticUsernameLabel = Label(fenetre, text="Elastic username", font=("black", 10), pady=10).grid(row=3, column=0, sticky="ws")
-  elasticUsername = Entry(fenetre, textvariable=str, width=30, font=("black", 10))
-
   def checkState(check, entry : ttk.Entry, fieldId : int):
     env = loadEnv()
     if fieldId == 0:
@@ -103,30 +81,42 @@ def menuUi():
         envCheckable.setelasticUrl(True)
         entry.delete(0,'end')
         entry.insert('end',env.getHosts())
-    
-  
-    #print(env.getfield)
-    # if check == True :
-    #   check = False
-    # else:
-    #   check = True
-    #   env = loadEnv()
-    #   username = env.getUsername()
-    #   elasticUsername.insert('end',username)
 
-  c1 = ttk.Checkbutton(fenetre, text='Add/Use env variable',command=lambda:checkState(envCheckable, elasticUsername, 0), onvalue=True, offvalue=False)
+  w = 1200
+  h = 700
+
+  ws = fenetre.winfo_screenwidth()
+  hs = fenetre.winfo_screenheight()
+
+  x = (ws / 2) - (w / 2)
+  y = (hs / 2) - (h / 1.8)
+
+  fenetre.geometry('%dx%d+%d+%d' % (w, h, x, y))
+
+  fenetre.title("FileBeatConfigurator")
+
+  hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=0, columnspan=6, sticky="ws")
+
+  mainTitle = Label(fenetre, text="Configure your Filebeat environnement",font=('bold', 20)).grid(row=1, column=0, columnspan=3)
+
+  hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=2, column=0, columnspan=6, sticky="ws")
+
+  elasticUsernameLabel = Label(fenetre, text="Elastic username", font=("black", 10), pady=10).grid(row=3, column=0, sticky="ws")
+  elasticUsername = Entry(fenetre, textvariable=str, width=30, font=("black", 10))
+
+  c1 = ttk.Checkbutton(fenetre, text='Use env variable',command=lambda:checkState(envCheckable, elasticUsername, 0), onvalue=True, offvalue=False)
   c1.grid(row=3, column=2, sticky="ws")
 
   elasticPasswordLabel = Label(fenetre, text="Elastic password", font=("black", 10),pady=10).grid(row=4, column=0, sticky="ws")
   elasticPassword = Entry(fenetre, show="*", textvariable=str, width=30, font=("black", 10))
 
-  c2 = ttk.Checkbutton(fenetre, text='Add/Use env variable',command=lambda:checkState(envCheckable, elasticPassword, 1), onvalue=True, offvalue=False)
+  c2 = ttk.Checkbutton(fenetre, text='Use env variable',command=lambda:checkState(envCheckable, elasticPassword, 1), onvalue=True, offvalue=False)
   c2.grid(row=4, column=2, sticky="ws")
 
   elasticUrlLabel = Label(fenetre, text="Elasticsearch endpoint", font=("black", 10),pady=10).grid(row=5, column=0, sticky="ws")
   elasticUrl = Entry(fenetre, textvariable=str, width=30, font=("black", 10))
 
-  c3 = ttk.Checkbutton(fenetre, text='Add/Use env variable',command=lambda:checkState(envCheckable, elasticUrl, 2), onvalue=True, offvalue=False)
+  c3 = ttk.Checkbutton(fenetre, text='Use env variable',command=lambda:checkState(envCheckable, elasticUrl, 2), onvalue=True, offvalue=False)
   c3.grid(row=5, column=2, sticky="ws")
 
   pathTitle = Label(fenetre, text="Paths", font=("black", 10), pady=10).grid(row=6, column=0, sticky="ws")
@@ -196,7 +186,6 @@ def menuUi():
     fenetre.destroy()
     
   elasticUsername.grid(row=3, column=1)
-  elasticUsername.insert(0, 'elastic')
   elasticPassword.grid(row=4, column=1)
   elasticUrl.grid(row=5,column=1)
   index.grid(row=3, column=5)
