@@ -25,6 +25,10 @@ filebeat.inputs:
           parsed.stepId: 9
     - drop_fields:
         fields: ["decoded"]
+    - script:
+        lang: javascript
+        id: "idScript"
+        file: "pathScript"
 
 
 filebeat.config.modules:
