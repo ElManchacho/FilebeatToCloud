@@ -1,39 +1,35 @@
 [
     {
-        "title":"project",
-        "position":1
-    },
-    {
         "title":"moment",
         "position":0
     },
     {
-        "title":"",
-        "position":2
+        "title":"project",
+        "position":1
     },
     {
         "title":"job",
+        "position":2
+    },
+    {
+        "title":"job_version",
         "position":3
     },
     {
         "title":"batch",
-        "position":5
-    },
-    {
-        "title":"job_version",
         "position":4
     },
     {
         "title":"code_flow",
-        "position":6
+        "position":5
     },
     {
         "title":"loglevel",
-        "position":7
+        "position":6
     },
     {
         "title":"message 1",
-        "position":8
+        "position":7
     },
     {
         "title":"message 2",
@@ -41,6 +37,6 @@
     },
     {
         "title":"error_code",
-        "position":10
+        "position":9
     }
 ]
