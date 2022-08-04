@@ -4,17 +4,17 @@ function process(event) {
 
     var slicedText = message.split(';');
 
-    var headers = [];
-
-    fs.readFile(jsonPath, 'utf8', function(err, data) {
-        if (err) {
-            event.Put('test.jsonifyError',err);
-          return;
-        }
-        event.Put('test.jsonify',data)
-      });
+    var headersConfig = [];
 
     var logCols = slicedText.length
+
+    var headers = []
+
+    headersConfig.forEach(function(config, indexConfig){
+        if(config.length == logCols){
+            headers = config
+        }
+    })
 
     var headersLength = headers.length
 

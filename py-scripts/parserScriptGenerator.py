@@ -13,8 +13,7 @@ def generateParserScript(configs : array, emptyField : str = ''): # input logs h
     
     basePath = os.getcwd().replace('py-scripts','')
     scriptFolderPath = basePath+'filebeatScripts\\'
-
-    if len(configs) == 0 : # no fields --> laxist script
+    if len(configs) == 0 or len(configs[0])==0: # no fields --> laxist script
         scriptCounter = 0
         existingScripts = findFiles('laxistCsvParser*.js', scriptFolderPath+'generated\\')
 
@@ -51,7 +50,6 @@ def generateParserScript(configs : array, emptyField : str = ''): # input logs h
         configCounter = 0
 
         existingInstances = findFiles('config_*.json', scriptFolderPath+'generated\\headersConfigs\\')
-
         for config in headersConfigs:
             if len(existingInstances) != 0 :
                 lastGeneratedInstance = (existingInstances[-1].replace('config_','')).replace('.json','').split(".")[0]
@@ -60,15 +58,22 @@ def generateParserScript(configs : array, emptyField : str = ''): # input logs h
                 if len(existingConfigs) != 0 :
                     lastGeneratedConfigs = (existingConfigs[-1].replace('config_'+str(instanceCounter)+'.','')).replace('.json','')[0]
                     configCounter = int(lastGeneratedConfigs) + 1
-
+            else:
+                instanceCounter = 0
+                configCounter = 0
+                existingConfigs = findFiles('config_'+str(instanceCounter)+'.*.json', str(scriptFolderPath)+'generated\\headersConfigs\\')
+                if len(existingConfigs) != 0 :
+                    lastGeneratedConfigs = (existingConfigs[-1].replace('config_'+str(instanceCounter)+'.','')).replace('.json','')[0]
+                    configCounter = int(lastGeneratedConfigs) + 1
+            
             with open(scriptFolderPath+"generated\\headersConfigs\\config_"+str(instanceCounter)+"."+str(configCounter)+".json", 'a') as file:
 
                 file.write(json.dumps(config))
         
-        strictCsvParserCript = strictCsvParserCript.replace('var headers = [];','var headers ='+str(headersConfigs)+';',1)
+        strictCsvParserCript = strictCsvParserCript.replace('var headersConfig = [];','var headersConfig ='+str(headersConfigs)+';',1)
         fullPathScript = scriptFolderPath+"generated\\csvParser"+ str(scriptCounter) +".js"
-        #with open(fullPathScript, 'a') as file:
+        with open(fullPathScript, 'a') as file:
 
-        #    file.write(strictCsvParserCript.strip())
+            file.write(strictCsvParserCript.strip())
         
         return fullPathScript

@@ -190,7 +190,7 @@ def menuUi():
   elasticUrl.grid(row=5,column=1)
   index.grid(row=3, column=5)
   fileExtension.grid(row=4, column=5)
-  fileExtension.insert(0,'csv')
+  fileExtension.insert(0,'txt')
   separatorInput.grid(row=5, column=5)
   separatorInput.insert(0, ';')
   logSample.grid(row=7, column=4, columnspan=2, rowspan=4)

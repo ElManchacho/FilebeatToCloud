@@ -36,14 +36,14 @@ def ymlComipler(input):
                 fieldsSetUp = defFields()
                 fieldsSetUp.defFieldsUi(fieldsFormat)
                 mappingScript = fieldsSetUp.getPath()
-                optionList["filebeat.inputs"][0]["processors"][0]["script"] = mappingScript
+                optionList["filebeat.inputs"][0]["processors"][0]["script"]['file'] = mappingScript
         else:
             fieldsFormat = formatAnalyser(input["extension"], "", input["separator"])
             if fieldsFormat["headersNumber"] == 0 and fieldsFormat["headers"] == [] :
                 fieldsSetUp = defFields()
                 fieldsSetUp.defFieldsUi(fieldsFormat)
                 mappingScript = fieldsSetUp.getPath()
-                optionList["filebeat.inputs"][0]["processors"][0]["script"] = mappingScript
+                optionList["filebeat.inputs"][0]["processors"][0]["script"]['file'] = mappingScript
         content = optionList
     
         file.close()
