@@ -2,7 +2,7 @@ from array import array
 from tkinter import *
 from tkinter import ttk
 from parserScriptGenerator import generateParserScript
-from fieldsConfiguration import FieldsConfiguration
+from fieldsConfigurationUi import FieldsConfiguration
 
 class defFields:
 

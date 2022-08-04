@@ -24,23 +24,26 @@ class FieldsConfiguration:
     def defConfigs(self):
     
         def dragValue(event):
-            self.dragLocation = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
+            if str(tv.identify_column(event.x)).replace('#','') != '':
+                self.dragLocation = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
 
         def dropValue(event):
             tv = event.widget
-            self.dropLocation = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
-            dragLocationIndex = self.fields.index(self.dragLocation)
-            dropLocationIndex = self.fields.index(self.dropLocation)
-            self.fields[dragLocationIndex] = self.dropLocation
-            self.fields[dropLocationIndex] = self.dragLocation
-            tv['columns'] = self.fields
-            for field in self.fields:
-                tv.column(field, anchor=CENTER, width=int(ceil(self.widthValue)))
-                tv.heading(field, text=field, anchor=CENTER)
+            if str(tv.identify_column(event.x)).replace('#','') != '':
+                self.dropLocation = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
+                dragLocationIndex = self.fields.index(self.dragLocation)
+                dropLocationIndex = self.fields.index(self.dropLocation)
+                self.fields[dragLocationIndex] = self.dropLocation
+                self.fields[dropLocationIndex] = self.dragLocation
+                tv['columns'] = self.fields
+                for field in self.fields:
+                    tv.column(field, anchor=CENTER, width=int(ceil(self.widthValue)))
+                    tv.heading(field, text=field, anchor=CENTER)
 
         def Movement(event):
             tv = event.widget
-            self.dropLocation = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
+            if str(tv.identify_column(event.x)).replace('#','') != '':
+                self.dropLocation = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
 
         fenetre = Tk()
         
@@ -79,8 +82,7 @@ class FieldsConfiguration:
                 newConfig.append({"title":str(self.fields[i]),"position":i})
             self.configsList.append(newConfig)
 
-        sendButton = Button(fenetre, text='Validate fields', command=lambda: validateConfigs(), width=15, font=('black', 13)).grid(row=12, column=1, columnspan=2)
-
+        
         tv = ttk.Treeview(fenetre, show="headings", height=0)
         style = ttk.Style()
         style.configure("Treeview.Heading", font=('black', 15))
@@ -100,4 +102,12 @@ class FieldsConfiguration:
         style = ttk.Style()
         style.theme_use("default")
         style.map("Treeview")
+
+
+        sendButton = Button(fenetre, text='Validate fields', command=lambda: validateConfigs(), width=15, font=('black', 13)).grid(row=12, column=1, columnspan=2)
+
+
         fenetre.mainloop()
+
+test = FieldsConfiguration(['f1','f2','f3'])
+test.defConfigs()
