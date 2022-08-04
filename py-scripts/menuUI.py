@@ -195,7 +195,7 @@ def menuUi():
   separatorInput.insert(0, ';')
   logSample.grid(row=7, column=4, columnspan=2, rowspan=4)
   hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=11, column=0, columnspan=6, sticky="ws")
-  sendButton = Button(fenetre, text='Validate configuration', command=lambda: validateConfig(), width=50, font=("black", 15)).grid(row=12, column=1, columnspan=4)
+  sendButton = Button(fenetre, text='Go to fields configuration', command=lambda: validateConfig(), width=50, font=("black", 15)).grid(row=12, column=1, columnspan=4)
   hr5 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=13, column=0, columnspan=6, sticky="ws")
 
   fenetre.mainloop()
