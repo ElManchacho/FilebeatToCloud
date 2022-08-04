@@ -7,6 +7,8 @@ class FieldsConfiguration:
 
     fields : array
 
+    BASEFIELDS : array
+
     dragLocation : str
 
     dropLocation : str
@@ -15,14 +17,25 @@ class FieldsConfiguration:
 
     configCounter : int
 
-    def __init__(self, fields : array, configCounter : int):
-        self.fields = fields
+    def __init__(self, fieldsInput : array, configCounter : int):
+        self.fields = fieldsInput
+        fieldsInputCopy = []
+        for field in fieldsInput:
+            fieldsInputCopy.append(field)
+        self.BASEFIELDS = fieldsInputCopy
         self.configCounter = configCounter
 
     def getConfigs(self):
         return self.config
 
     def defConfigs(self):
+
+        def resetHeaders(event):
+            tv = event.widget
+            tv['columns'] = self.BASEFIELDS
+            for field in self.BASEFIELDS:
+                tv.column(field, anchor=CENTER)
+                tv.heading(field, text=field, anchor=CENTER)
     
         def dragValue(event):
             if str(tv.identify_column(event.x)).replace('#','') != '':
@@ -64,7 +77,7 @@ class FieldsConfiguration:
 
         mainTitle = Label(fenetre, text="Configure your fields position for the header logs interpreter\n",font='bold', padx=5).pack()
 
-        labelInfo = Label(fenetre, text="\nYou can now see your fields configuration respecting the order of your logs columns format\nDrag and drop the columns if it doesn't fit your logs format\n", background="#E1BD0C", padx=5).pack()
+        labelInfo = Label(fenetre, text="\nYou can now see your fields configuration respecting the order of your logs columns format\nDrag and drop the columns if it doesn't fit your logs format order\nDouble the columns name to reset the whole config (quick reclick will cancel the reset)\n", background="#E1BD0C", padx=5).pack()
 
         labelLineBreak1 = Label(fenetre, text="\n").pack()
 
@@ -91,6 +104,7 @@ class FieldsConfiguration:
         tv.bind("<ButtonPress-1>", dragValue)
         tv.bind("<ButtonRelease-1>", dropValue, add='+')
         tv.bind("<B1-Motion>",Movement, add='+')
+        tv.bind("<Double-1>", resetHeaders, add='+')
 
         if len(self.fields) > 4:
             
@@ -112,4 +126,3 @@ class FieldsConfiguration:
         style.map("Treeview")
 
         fenetre.mainloop()
-
