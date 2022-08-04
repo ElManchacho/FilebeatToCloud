@@ -1,6 +1,5 @@
-import os, fnmatch
-from array import array
-from dataclasses import field
+import os, fnmatch, json
+import array
 
 def findFiles(pattern, path):
     result = []
@@ -10,12 +9,12 @@ def findFiles(pattern, path):
                 result.append(name)
     return result
 
-def generateParserScript(fields : array, emptyField : str = ''):
+def generateParserScript(configs : array, emptyField : str = ''): # input logs headers configuration(s) / empty columns value
     
     basePath = os.getcwd().replace('py-scripts','')
     scriptFolderPath = basePath+'filebeatScripts\\'
 
-    if len(fields) == 0 : # no fields --> laxist script
+    if len(configs) == 0 : # no fields --> laxist script
         scriptCounter = 0
         existingScripts = findFiles('laxistCsvParser*.js', scriptFolderPath+'generated\\')
 
@@ -33,7 +32,8 @@ def generateParserScript(fields : array, emptyField : str = ''):
 
         return fullPathLaxistScript
 
-    else : # generate custome mapping script
+    else : # Generate custom mapping script
+
 
         scriptCounter = 0
         existingScripts = findFiles('csvParser*.js', scriptFolderPath+'generated\\')
@@ -45,15 +45,30 @@ def generateParserScript(fields : array, emptyField : str = ''):
 
         f = open(scriptFolderPath+"Templates\\strictCsvParserTemplate.js", "r")
         strictCsvParserCript = f.read()
-        headersConfig = []
-        headersConfig.append({"":""})
-        print(headersConfig)
-        strictCsvParserCript = strictCsvParserCript.replace('var headers = [];','var headers ='+str(headersConfig)+';',1)
+        headersConfigs = configs
+
+        instanceCounter = 0
+        configCounter = 0
+
+        existingInstances = findFiles('config_*.json', scriptFolderPath+'generated\\headersConfigs\\')
+
+        for config in headersConfigs:
+            if len(existingInstances) != 0 :
+                lastGeneratedInstance = (existingInstances[-1].replace('config_','')).replace('.json','').split(".")[0]
+                instanceCounter = int(lastGeneratedInstance) + 1
+                existingConfigs = findFiles('config_'+str(instanceCounter)+'.*.json', str(scriptFolderPath)+'generated\\headersConfigs\\')
+                if len(existingConfigs) != 0 :
+                    lastGeneratedConfigs = (existingConfigs[-1].replace('config_'+str(instanceCounter)+'.','')).replace('.json','')[0]
+                    configCounter = int(lastGeneratedConfigs) + 1
+
+            with open(scriptFolderPath+"generated\\headersConfigs\\config_"+str(instanceCounter)+"."+str(configCounter)+".json", 'a') as file:
+
+                file.write(json.dumps(config))
+        
+        strictCsvParserCript = strictCsvParserCript.replace('var headers = [];','var headers ='+str(headersConfigs)+';',1)
         fullPathScript = scriptFolderPath+"generated\\csvParser"+ str(scriptCounter) +".js"
         #with open(fullPathScript, 'a') as file:
 
         #    file.write(strictCsvParserCript.strip())
         
         return fullPathScript
-
-generateParserScript(['f1','f2','f3'],'')

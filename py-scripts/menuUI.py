@@ -167,7 +167,7 @@ def menuUi():
       "sample": logSample.get('@1,0', 'end'),
       "separator": separatorInput.get() or ''
     }
-
+    fenetre.destroy()
     ymlComipler(dicoInput)
 
 

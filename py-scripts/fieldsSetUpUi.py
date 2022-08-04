@@ -2,6 +2,7 @@ from array import array
 from tkinter import *
 from tkinter import ttk
 from parserScriptGenerator import generateParserScript
+from fieldsConfiguration import FieldsConfiguration
 
 class defFields:
 
@@ -70,9 +71,16 @@ class defFields:
 
     def validateFields():
       fields = listFields.get('@1,0','end')
-      mappingScriptPath = generateParserScript(fields)
-      self.scriptPath = mappingScriptPath
       fenetre.destroy()
+      fieldsArray = []
+      for field in fields:
+        fieldsArray.append(field)
+      fields=fieldsArray
+      fieldsConfigs = FieldsConfiguration(fields)
+      fieldsConfigs.defConfigs()
+      configs = fieldsConfigs.getConfigs()
+      mappingScriptPath = generateParserScript(configs)
+      self.scriptPath = mappingScriptPath
       
 
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=11, column=1, columnspan=6, sticky="ws")
@@ -80,33 +88,3 @@ class defFields:
     hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=13, column=1, columnspan=6, sticky="ws")
 
     fenetre.mainloop()
-
-    # get :
-    #     - elastic username (default : elastic) --> Ok
-    #     - elastic password --> Ok
-    #     - cloud kibana URI --> Ok
-    #     - nom index (default : index) --> En cours ....
-    #     - liste des fields de logs --> Ok
-    #     - intel recup champs + envoi dans script (Pas fait) de modifcation de filebeat.yml
-    #     - BONUS : type de fichier de logs --> UI : OK, Intel : on verra --> Ok for csv and separator for any fiel type
-            #   processors: 
-            #   - decode_csv_fields:
-            #       fields: 
-            #         message: decoded.csv 
-            #       separator: ";"
-            #   - extract_array:
-            #       field: decoded.csv
-            #       mappings:
-            #         parsed.attribute1: 0
-            #         parsed.attribute2: 1
-            #         parsed.attribute3: 2
-            #         parsed.attribute4: 3
-            #         parsed.attribute5: 4
-            #         parsed.attribute6: 5
-            #         parsed.attribute7: 6
-            #         parsed.attribute8: 7
-            #         parsed.attribute9: 8
-            #         parsed.attribute10: 9
-            #   - drop_fields:
-            #       fields: ["decoded"]
-
