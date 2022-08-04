@@ -25,7 +25,7 @@ class FieldsConfiguration:
         self.BASEFIELDS = fieldsInputCopy
         self.configCounter = configCounter
 
-    def getConfigs(self):
+    def getConfig(self):
         return self.config
 
     def defConfigs(self):
