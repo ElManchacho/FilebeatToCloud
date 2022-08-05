@@ -91,13 +91,14 @@ We can see 3 différent logs formats here : not every field is filled
 
 
 ```value1.3;value2.3;value3.3 ```--> OK
+
 ```value1.4;value3.4          ```--> 1 field missing (2nd column)
+
 ```value3.5                   ```--> 2 fields missing (2nd and 3rd columns)
 
 
 So let's set up 3 logs fields configuration.
 
-![image](https://user-images.githubusercontent.com/74706889/183069339-23f3e1cb-727b-40cf-9888-cdf5e7c2fbcf.png)
 
 ![image](https://user-images.githubusercontent.com/74706889/183070162-6c6d685f-2ced-4f8b-8a43-c05fc5db1020.png)
 
