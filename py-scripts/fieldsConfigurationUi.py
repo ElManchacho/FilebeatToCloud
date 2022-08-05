@@ -30,14 +30,19 @@ class FieldsConfiguration:
 
     def defConfigs(self):
 
-        def resetHeaders(event):
+        def deleteHeader(event):
             tv = event.widget
-            tv['columns'] = self.BASEFIELDS
-            for field in self.BASEFIELDS:
-                tv.column(field, anchor=CENTER)
-                tv.heading(field, text=field, anchor=CENTER)
+            if str(tv.identify_column(event.x)).replace('#','') != '':
+                toDelete = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
+                self.fields.pop(self.fields.index(toDelete))
+                tv['columns'] = self.fields
+                for field in self.fields:
+                    tv.column(field, anchor=CENTER)
+                    tv.heading(field, text=field, anchor=CENTER)
+
     
         def dragValue(event):
+            tv = event.widget
             if str(tv.identify_column(event.x)).replace('#','') != '':
                 self.dragLocation = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
 
@@ -45,14 +50,15 @@ class FieldsConfiguration:
             tv = event.widget
             if str(tv.identify_column(event.x)).replace('#','') != '':
                 self.dropLocation = tv['columns'][int(str(tv.identify_column(event.x)).replace('#',''))-1]
-                dragLocationIndex = self.fields.index(self.dragLocation)
-                dropLocationIndex = self.fields.index(self.dropLocation)
-                self.fields[dragLocationIndex] = self.dropLocation
-                self.fields[dropLocationIndex] = self.dragLocation
-                tv['columns'] = self.fields
-                for field in self.fields:
-                    tv.column(field, anchor=CENTER)
-                    tv.heading(field, text=field, anchor=CENTER)
+                if (self.dragLocation in self.fields):
+                    dragLocationIndex = self.fields.index(self.dragLocation)
+                    dropLocationIndex = self.fields.index(self.dropLocation)
+                    self.fields[dragLocationIndex] = self.dropLocation
+                    self.fields[dropLocationIndex] = self.dragLocation
+                    tv['columns'] = self.fields
+                    for field in self.fields:
+                        tv.column(field, anchor=CENTER)
+                        tv.heading(field, text=field, anchor=CENTER)
 
         def Movement(event):
             tv = event.widget
@@ -77,7 +83,7 @@ class FieldsConfiguration:
 
         mainTitle = Label(fenetre, text="Configure your fields position for the header logs interpreter\n",font='bold', padx=5).pack()
 
-        labelInfo = Label(fenetre, text="\nYou can now see your fields configuration respecting the order of your logs columns format\nDrag and drop the columns if it doesn't fit your logs format order\nDouble the columns name to reset the whole config (quick reclick will cancel the reset)\n", background="#E1BD0C", padx=5).pack()
+        labelInfo = Label(fenetre, text="\nYou can now see your fields configuration respecting the order of your logs columns format\nDrag and drop the columns if it doesn't fit your logs format order\nDouble click a column name to delete it\n", background="#E1BD0C", padx=5).pack()
 
         labelLineBreak1 = Label(fenetre, text="\n").pack()
 
@@ -104,7 +110,7 @@ class FieldsConfiguration:
         tv.bind("<ButtonPress-1>", dragValue)
         tv.bind("<ButtonRelease-1>", dropValue, add='+')
         tv.bind("<B1-Motion>",Movement, add='+')
-        tv.bind("<Double-1>", resetHeaders, add='+')
+        tv.bind("<Double-1>", deleteHeader, add='+')
 
         if len(self.fields) > 4:
             

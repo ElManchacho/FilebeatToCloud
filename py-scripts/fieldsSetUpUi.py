@@ -77,23 +77,22 @@ class defFields:
         return None
       if numberOfConfigs != '' and int(numberOfConfigs) > 0 :
         fields = listFields.get('@1,0','end')
-        fieldsArray = []
-        for field in fields: # convert tuple into array
-          fieldsArray.append(field)
-        fields=fieldsArray
         fenetre.destroy()
         configs = []
         for configIndex in range(int(numberOfConfigs)):
-          fieldsConfigs = FieldsConfiguration(fields, configIndex)
+          fieldsArray =[]
+          for field in fields: # convert tuple into array
+            fieldsArray.append(field)
+          fieldsConfigs = FieldsConfiguration(fieldsArray, configIndex)
           fieldsConfigs.defConfigs()
-          configs.append(fieldsConfigs.getConfigs())
+          configs.append(fieldsConfigs.getConfig())
         mappingScriptPath = generateParserScript(configs)
         self.scriptPath = mappingScriptPath
       
 
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=11, column=1, columnspan=6, sticky="ws")
     labelConfigCount = Label(fenetre, text='Indicate the number of fields\nconfiguration your logs may encounter').grid(row=12, column=1, padx=10)
-    entryConfigCount = Entry(fenetre, width=10)
+    entryConfigCount = Entry(fenetre, justify='center', width=10)
     sendButton = Button(fenetre, text='Configure fields order', command=lambda: validateFields(entryConfigCount.get()), width=20, font=('black', 13), padx=10).grid(row=13, column=2, columnspan=2)
     entryConfigCount.grid(row=13, column=1, padx=10)
     hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=14, column=1, columnspan=6, sticky="ws")
