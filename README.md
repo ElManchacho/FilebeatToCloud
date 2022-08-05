@@ -1,3 +1,5 @@
+Public doc : https://github.com/ElManchacho/FilebeatToCloudInfos
+
 # FilebeatToCloud
 
 An easy way to add a Filebeat configuration to your system
