@@ -12,7 +12,7 @@ This app currently runs with the 8.3.1 version of Filebeat --> https://www.elast
 
 ![image](https://user-images.githubusercontent.com/74706889/183057279-5c144461-7b74-4121-9946-fce537736f4c.png)
 
-:warning: For now, you can only use the 1st Menu option, as the other ones are ready for deployment yet
+:warning: For now, you can only use the 1st Menu option, as the other ones are not ready for deployment yet (soon TM)
 
 
 ## New Filebeat configuration :
