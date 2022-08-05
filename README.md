@@ -90,19 +90,66 @@ value1.10;value2.10;value3.10
 We can see 3 différent logs formats here : not every field is filled
 
 
-```value1.3;value2.3;value3.3 ```--> OK
+```value1.3;value2.3;value3.3``` --> OK
 
-```value1.4;value3.4          ```--> 1 field missing (2nd column)
+```value1.4;value3.4``` --> 1 field missing (2nd column)
 
-```value3.5                   ```--> 2 fields missing (2nd and 3rd columns)
+```value3.5``` --> 2 fields missing (2nd and 3rd columns)
 
 
-So let's set up 3 logs fields configuration.
-
+So let's set up 3 logs fields configuration :
 
 ![image](https://user-images.githubusercontent.com/74706889/183070162-6c6d685f-2ced-4f8b-8a43-c05fc5db1020.png)
 
+- Set up the first configuration :
+
+![image](https://user-images.githubusercontent.com/74706889/183070446-53f4c547-fbca-4266-9c70-d0c5f64a8dba.png)
+
+- Set up the second configuration :
+
+![image](https://user-images.githubusercontent.com/74706889/183070612-d9c592ca-4b93-4abd-8cd2-3a07772ac55c.png)
+
+- Set up the third configuration :
+
+![image](https://user-images.githubusercontent.com/74706889/183070686-8fa57da1-e707-49d2-b46e-de756a5efd56.png)
+
+And then, set up is done !
+
+Go into the 'FilebeatToCloud\filebeat-8.3.1-windows-x86_64\' folder and start your Filebeat instance in a powershell terminal with the ```.\filebeat.exe -e``` command :
+
+```...\FilebeatToCloud\filebeat-8.3.1-windows-x86_64> .\filebeat.exe -e```
  
+Before sending any log, let's check our Elastic Cloud indexes (```host:port/app/management/data/index_management/indices```) :
+
+![image](https://user-images.githubusercontent.com/74706889/183071659-59de8a6c-65b7-4c86-852a-1c90307aa960.png)
+
+We can see that our index hasn't been created yet.
+
+Now let's send the log we used as a sample in our 2 input folders :
+
+![image](https://user-images.githubusercontent.com/74706889/183072213-2393e79f-ba24-4c20-a890-983b5d8da46d.png)
+
+In folder 1 :
+
+```
+value1.1;value2.1;value3.1
+value3.2
+value1.3;value2.3;value3.3
+value1.4;value3.4
+value3.5
+```
+
+In folder 2 :
+```
+value3.6
+value3.7
+value1.8;value3.8
+value1.9;value3.9
+value1.10;value2.10;value3.10
+```
+
+
+
 ### Disclaimer
 
 I don't to modify any file / folder content or name or the app could stop working
