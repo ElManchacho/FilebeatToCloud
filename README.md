@@ -27,7 +27,7 @@ This app currently runs with the 8.3.1 version of Filebeat --> https://www.elast
 
 ### General usage
 
-![image](https://user-images.githubusercontent.com/74706889/183058818-2db9e42e-cc8b-4926-90c6-56d7ceac6415.png)
+![image](https://user-images.githubusercontent.com/74706889/183076414-90952e42-69e7-406a-aa17-2648c9be9705.png)
 
 :information_source: There is a local '.env' file in the 'FilebeatToCloud\py-scripts\' folder in which you can adress your personal information.
 
