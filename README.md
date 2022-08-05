@@ -8,16 +8,6 @@ An easy way to add a Filebeat configuration to your system
 This app currently runs with the 8.3.1 version of Filebeat --> https://www.elastic.co/downloads/past-releases/filebeat-8-3-1
 
 
-## Ideas
-
-Make a upper level menu to choose to add a new Filebeat configuration or to use an existing/ancient one
-
-Being able to export / import a gonfiguration --> generated/parserscript.js + generated/headersConfigs/config_..js + filebeat.yml
-
-Being able to have multiple Filebeat instances/services + create a management panel
-
-
-
 ## Menu preview :
 
 ![image](https://user-images.githubusercontent.com/74706889/183057279-5c144461-7b74-4121-9946-fce537736f4c.png)
@@ -182,6 +172,15 @@ Now let's properly display our data :
 Wonderful ! Our data fields are perfectly classified !
 
 You can now use the FilebeatToCloud application to send your logs with your very own formats on your cloud !
+
+
+## Ideas
+
+Make a upper level menu to choose to add a new Filebeat configuration or to use an existing/ancient one
+
+Being able to export / import a gonfiguration --> generated/parserscript.js + generated/headersConfigs/config_..js + filebeat.yml
+
+Being able to have multiple Filebeat instances/services + create a management panel
 
 
 ### Disclaimer
