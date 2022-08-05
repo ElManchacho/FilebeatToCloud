@@ -1,6 +1,6 @@
-from menuUI import *
 from cacheFlush import cacheFlush
-import atexit, sys
+from menuUi import menuUi
+import atexit
 
 if __name__ == "__main__":
     atexit.register(cacheFlush)
