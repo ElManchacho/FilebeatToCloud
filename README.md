@@ -102,7 +102,7 @@ So let's set up 3 logs fields configuration :
 
 - Set up the third configuration :
 
-![image](https://user-images.githubusercontent.com/74706889/183070686-8fa57da1-e707-49d2-b46e-de756a5efd56.png)
+![image](https://user-images.githubusercontent.com/74706889/183076651-4aa6db5d-066c-4ad0-a305-550146d5a221.png)
 
 And then, set up is done !
 
