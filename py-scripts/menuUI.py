@@ -1,7 +1,8 @@
-import os, sys, time
 from tkinter import *
 from tkinter import ttk
-from menuNewConfig import *
+from menuNewConfig import menuNewConfig
+from configListUi import configListUi
+from instanceListUi import instanceListUi
 
 def menuUi():
 
@@ -39,11 +40,11 @@ def menuUi():
     
     def seeInstances():
         fenetre.destroy()
-        return None
+        instanceListUi()
 
     def seeConfigs():
         fenetre.destroy()
-        return None
+        configListUi()
 
     sendButton = Button(fenetre, text='Add a new\nFilebeat configuration', command=lambda: newCgonfig(), width=20, font=('black', 13), padx=10).grid(row=5, column=2, columnspan=2)
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=6, column=1, columnspan=6, sticky="ws")
