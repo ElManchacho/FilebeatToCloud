@@ -3,7 +3,7 @@
 An easy way to add a Filebeat configuration to your system
 
 
-# Used Filebeat version
+## Used Filebeat version
 
 This app currently runs with the 8.3.1 version of Filebeat --> https://www.elastic.co/downloads/past-releases/filebeat-8-3-1
 
