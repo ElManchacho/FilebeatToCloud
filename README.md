@@ -85,6 +85,7 @@ value3.7
 value1.8;value3.8
 value1.9;value3.9
 value1.10;value2.10;value3.10
+
 ```
 
 We can see 3 différent logs formats here : not every field is filled
@@ -129,7 +130,7 @@ Now let's send the log we used as a sample in our 2 input folders :
 
 ![image](https://user-images.githubusercontent.com/74706889/183072213-2393e79f-ba24-4c20-a890-983b5d8da46d.png)
 
-In folder 1 :
+In folder 1 (as a '.txt' file) :
 
 ```
 value1.1;value2.1;value3.1
@@ -137,19 +138,57 @@ value3.2
 value1.3;value2.3;value3.3
 value1.4;value3.4
 value3.5
+
 ```
 
-In folder 2 :
+In folder 2 (as a '.txt' file) :
 ```
 value3.6
 value3.7
 value1.8;value3.8
 value1.9;value3.9
 value1.10;value2.10;value3.10
+
 ```
 
+Now check if our index has been crated :
+
+![image](https://user-images.githubusercontent.com/74706889/183072849-f0ef727c-8a6d-4e87-9c9e-f47889ee1a5e.png)
+
+Yes !
+
+Let's now create a Data View to explore our log's data (```host:port/app/management/kibana/dataViews```) :
+
+![image](https://user-images.githubusercontent.com/74706889/183073258-b3027fac-907f-4fc8-9da3-c898be7ae735.png)
+
+Now, we can visualize our data in the Kibana Discover section :
+
+![image](https://user-images.githubusercontent.com/74706889/183074649-992fe4bb-ae07-485c-80bf-9ec6b24f90a7.png)
+
+We received our 10 rows splitted in the 2 '.txt' files in the 2 precedently setp up folders !
+
+Let's now observe our data fields to check if our formats were properly set up :
+
+We can now select our headers in the field search input :
+
+![image](https://user-images.githubusercontent.com/74706889/183074731-016f56ce-6c6f-45e4-be0e-b8c7bde5a6db.png)
+
+:information_source: All the received data are prefixed by 'parsed.'
+
+Now let's properly display our data :
+
+![image](https://user-images.githubusercontent.com/74706889/183075372-e485c1a7-4fc7-4d60-8d7d-457862fff5f1.png)
+
+Wonderful ! Our data fields are perfectly classified !
+
+You can now use the FilebeatToCloud application to send your logs with your very own formats on your cloud !
 
 
 ### Disclaimer
 
 I don't to modify any file / folder content or name or the app could stop working
+
+
+##### Regards,
+
+##### LEROY DUCARDONNOY Paul
