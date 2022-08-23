@@ -40,7 +40,11 @@ Start-Process -Wait -FilePath $location"\python-3.10.5-amd64.exe"  -Argument "/s
 
 Start-Sleep -s 15
 
-# download pip python installer script
+# delete python installer
+
+Remove-Item $location"\python-3.10.5-amd64.exe"
+
+download pip python installer script
 
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 
@@ -55,27 +59,32 @@ Remove-Item $location"\get-pip.py"
 # get pip path
 
 $pipPath = ((Get-Command python).Source).Replace("python.exe","")+"Scripts"
+$pipPath = ((Get-Command py).Source).Replace("py.exe","")+"Scripts"
+
+"pipPath : " + $pipPath
 
 # add pip path variable
 
-$path = [System.Environment]::GetEnvironmentVariable(
+$envVariables = [System.Environment]::GetEnvironmentVariable(
     'PATH',
     'Machine'
 )
 
 [System.Environment]::SetEnvironmentVariable(
     'PATH',
-    $path+$pipPath+";",
+    $envVariables+$pipPath+";",
     'Machine'
 )
+
+$test = 'Jalon'
+
+$test
+"path : " + $envVariables
+"pipPath : " + $pipPath
 
 # let time for pip to install + add path variable
 
 Start-Sleep -s 10
-
-# delete python installer
-
-Remove-Item $location"\python-3.10.5-amd64.exe"
 
 # install pip packages for python script purpose
 
@@ -88,3 +97,13 @@ pip install python-dotenv
 py "./py-scripts/main.py" -Wait
 
 # renvoyer vers le cloud ou kibana
+
+
+# PS C:\Windows\system32> py
+# Python 3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)] on win32
+# Type "help", "copyright", "credits" or "license" for more information.
+# >>> import os
+# >>> import sys
+# >>> os.path.dirname(sys.executable)
+# 'C:\\Users\\pleroyducardonnoy\\AppData\\Local\\Programs\\Python\\Python310'
+# >>> ^Z
