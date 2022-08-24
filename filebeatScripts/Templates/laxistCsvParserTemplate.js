@@ -1,8 +1,11 @@
 function process(event) {
 
     var message = event.Get("message");
-    
-    event.Put("eventMessage", message);
+
+    if(message.charAt(message.length-1) == ";" || message.charAt(message.length-1) == ",")
+    {
+        message = message.slice(0,-1);
+    }
 
     var slicedText = message.split(';');
 
