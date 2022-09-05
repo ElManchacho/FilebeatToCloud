@@ -46,7 +46,7 @@ Remove-Item $location"\python-3.10.5-amd64.exe"
 
 download pip python installer script
 
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 
 # install pip
 
@@ -97,13 +97,3 @@ pip install python-dotenv
 py "./py-scripts/main.py" -Wait
 
 # renvoyer vers le cloud ou kibana
-
-
-# PS C:\Windows\system32> py
-# Python 3.10.5 (tags/v3.10.5:f377153, Jun  6 2022, 16:14:13) [MSC v.1929 64 bit (AMD64)] on win32
-# Type "help", "copyright", "credits" or "license" for more information.
-# >>> import os
-# >>> import sys
-# >>> os.path.dirname(sys.executable)
-# 'C:\\Users\\pleroyducardonnoy\\AppData\\Local\\Programs\\Python\\Python310'
-# >>> ^Z

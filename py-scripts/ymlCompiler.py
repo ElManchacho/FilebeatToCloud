@@ -6,7 +6,7 @@ def ymlComipler(input):
     basePath = os.getcwd().replace('py-scripts','')
     filebeatPath = basePath+'\\filebeat.yml'
     content = None
-
+    scriptPath = ""
     with open(filebeatPath) as file:
 
         optionList = yaml.load(file, Loader=yaml.FullLoader)
@@ -36,6 +36,7 @@ def ymlComipler(input):
                 fieldsSetUp = defFields()
                 fieldsSetUp.defFieldsUi(fieldsFormat)
                 mappingScript = fieldsSetUp.getPath()
+                scriptPath = mappingScript;
                 optionList["filebeat.inputs"][0]["processors"][0]["script"]['file'] = mappingScript
         else:
             fieldsFormat = formatAnalyser(input["extension"], "", input["separator"])
@@ -43,6 +44,7 @@ def ymlComipler(input):
                 fieldsSetUp = defFields()
                 fieldsSetUp.defFieldsUi(fieldsFormat)
                 mappingScript = fieldsSetUp.getPath()
+                scriptPath = mappingScript;
                 optionList["filebeat.inputs"][0]["processors"][0]["script"]['file'] = mappingScript
         content = optionList
     
@@ -50,3 +52,5 @@ def ymlComipler(input):
 
     with open(basePath+'/filebeat-8.3.1-windows-x86_64/filebeat.yml', 'w') as file:
         documents = yaml.dump(content, file, sort_keys=False)
+
+    return scriptPath

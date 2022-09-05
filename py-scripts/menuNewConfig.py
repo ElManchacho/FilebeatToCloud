@@ -1,4 +1,4 @@
-import os, sys, time
+import os, sys, time, fnmatch, json
 from tkinter import *
 from tkinter import ttk
 from ymlCompiler import ymlComipler
@@ -82,6 +82,15 @@ def menuNewConfig():
         entry.delete(0,'end')
         entry.insert('end',env.getHosts())
 
+  
+  def findFiles(pattern, path):
+    result = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            if fnmatch.fnmatch(name, pattern):
+                result.append(name)
+    return result
+
   w = 1200
   h = 700
 
@@ -153,6 +162,7 @@ def menuNewConfig():
   logSample = Text(fenetre, bg="light grey", font=("black", 8), height=25, width=100, padx=20, pady=20)
 
   def validateConfig():
+
     pathsArray = []
     ListOfPaths = listPath.get('@1,0', 'end')
     for path in ListOfPaths:
@@ -168,10 +178,30 @@ def menuNewConfig():
       "separator": separatorInput.get() or ''
     }
     fenetre.destroy()
-    ymlComipler(dicoInput)
+    scriptPath = ymlComipler(dicoInput)
 
+    basePath = os.getcwd().replace('py-scripts','')
+    fullpathConfigsFolder = basePath + "configs\\generated\\"
 
+    scriptCounter = 0
 
+    existingFilebeatConfigs = findFiles('filebeatConfig_*.json', fullpathConfigsFolder)
+
+    if len(existingFilebeatConfigs) != 0 :
+
+      lastGeneratedScriptName = (existingFilebeatConfigs[-1].replace('filebeatConfig_','')).replace('.json','')
+
+      scriptCounter =int(lastGeneratedScriptName) + 1
+
+    content = {
+      "scriptPath":scriptPath,
+      "headerPaths":[
+        "test","test"
+      ]
+    }
+    with open(fullpathConfigsFolder+"filebeatConfig_"+str(scriptCounter)+".json", 'a') as file:
+
+            file.write(json.dumps(content))
     return None
     path = os.getcwd()+'\\filebeat-8.3.1-windows-x86_64\\install-service-filebeat.ps1'
     subprocess.Popen(["powershell.exe",path],stdout=sys.stdout)

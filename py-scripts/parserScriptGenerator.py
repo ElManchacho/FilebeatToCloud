@@ -12,7 +12,7 @@ def findFiles(pattern, path):
 def generateParserScript(configs : array, emptyField : str = ''): # input logs headers configuration(s) / empty columns value
     
     basePath = os.getcwd().replace('py-scripts','')
-    scriptFolderPath = basePath+'\\filebeatScripts\\'
+    scriptFolderPath = basePath+'filebeatScripts\\'
     if len(configs) == 0 or len(configs[0])==0: # no fields --> laxist script
         scriptCounter = 0
         existingScripts = findFiles('laxistCsvParser*.js', scriptFolderPath+'generated\\')
