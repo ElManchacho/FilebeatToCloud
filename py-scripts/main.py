@@ -1,5 +1,5 @@
 from cacheFlush import cacheFlush
-from menuUi import menuUi
+from menuUI import menuUi
 import atexit
 
 if __name__ == "__main__":
