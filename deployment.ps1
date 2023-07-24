@@ -14,6 +14,10 @@ Remove-Item -Recurse -Force $location"\filebeat-8.3.1-windows-x86_64"
 
 Add-Type -AssemblyName System.IO.Compression
 
+# download 8.8.2 Filbeat installer
+
+# Invoke-WebRequest -Uri "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.8.2-windows-x86_64.msi" -OutFile $location"\filebeat-8.8.2-windows-x86_64.msi"
+
 # unzip filbeat
 
 Expand-Archive -Path $location"\filebeat-8.3.1-windows-x86_64.zip" -DestinationPath $location
