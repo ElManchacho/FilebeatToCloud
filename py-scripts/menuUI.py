@@ -4,7 +4,7 @@ from menuNewConfig import menuNewConfig
 from configListUi import configListUi
 from instanceListUi import instanceListUi
 
-def menuUi():
+def menuUi(filbeatVersion):
 
     fenetre = Tk()
 
@@ -35,7 +35,7 @@ def menuUi():
 
     def newCgonfig():
         fenetre.destroy()
-        menuNewConfig()
+        menuNewConfig(filbeatVersion)
     
     def seeInstances():
         fenetre.destroy()

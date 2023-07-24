@@ -1,26 +1,32 @@
+# set global filbeat version & .zip file reference variables
+
+$filebeatVersion = "filebeat-8.8.2-windows-x86_64"
+
+$zipFile = $filebeatVersion+".zip"
+
 # deployment folder location instanciation
 
 $location = (Get-Location).Path
 
 # unistall existing filebeat service
 
-Invoke-Expression -Command $location"\filebeat-8.3.1-windows-x86_64\uninstall-service-filebeat.ps1"
+Invoke-Expression -Command $location"\$filebeatVersion\uninstall-service-filebeat.ps1"
 
 # remove existing installation
 
-Remove-Item -Recurse -Force $location"\filebeat-8.3.1-windows-x86_64"
+Remove-Item -Recurse -Force $location"\$filebeatVersion"
 
 # unzip function instanciation
 
 Add-Type -AssemblyName System.IO.Compression
 
-# download 8.8.2 Filbeat installer
+# download Filbeat installer
 
-# Invoke-WebRequest -Uri "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.8.2-windows-x86_64.msi" -OutFile $location"\filebeat-8.8.2-windows-x86_64.msi"
+Invoke-WebRequest -Uri "https://artifacts.elastic.co/downloads/beats/filebeat/$zipFile" -OutFile $location"\$zipFile"
 
 # unzip filbeat
 
-Expand-Archive -Path $location"\filebeat-8.3.1-windows-x86_64.zip" -DestinationPath $location
+Expand-Archive -Path $location"\$zipFile" -DestinationPath $location
 
 # let time to unzip folder
 
@@ -28,9 +34,9 @@ Start-Sleep -s 10
 
 # replace filebeat.yml from unzipped folder with almost ready filebeat file
 
-Remove-Item $location"\filebeat-8.3.1-windows-x86_64\filebeat.yml"
+Remove-Item $location"\$filebeatVersion\filebeat.yml"
 
-Copy-Item -Path $location"\filebeat.yml" -Destination $location"\filebeat-8.3.1-windows-x86_64\filebeat.yml"
+Copy-Item -Path $location"\filebeat.yml" -Destination $location"\$filebeatVersion\filebeat.yml"
 
 # download python 3.10.5 (last version on 08/07/2022)
 
@@ -48,7 +54,7 @@ Start-Sleep -s 15
 
 Remove-Item $location"\python-3.10.5-amd64.exe"
 
-download pip python installer script
+# download pip python installer script
 
 Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 
@@ -98,6 +104,6 @@ Start-Sleep -s 10
 
 pip install python-dotenv
 
-py "./py-scripts/main.py" -Wait
+py "./py-scripts/main.py" -p $filebeatVersion -Wait
 
 # renvoyer vers le cloud ou kibana

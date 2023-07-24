@@ -49,7 +49,7 @@ class loadEnv:
   def getPassword(self):
     return self._protected_password
 
-def menuNewConfig():
+def menuNewConfig(filbeatVersion):
 
   fenetre = Tk()
 
@@ -178,10 +178,10 @@ def menuNewConfig():
       "separator": separatorInput.get() or ''
     }
     fenetre.destroy()
-    scriptPath = ymlComipler(dicoInput)
+    scriptPath = ymlComipler(dicoInput, filbeatVersion)
 
     basePath = os.getcwd().replace('py-scripts','')
-    fullpathConfigsFolder = basePath + "configs\\generated\\"
+    fullpathConfigsFolder = basePath + "\\configs\\generated\\"
 
     scriptCounter = 0
 
@@ -203,7 +203,7 @@ def menuNewConfig():
 
             file.write(json.dumps(content))
     return None
-    path = os.getcwd()+'\\filebeat-8.3.1-windows-x86_64\\install-service-filebeat.ps1'
+    path = os.getcwd()+'\\'+filbeatVersion+'\\install-service-filebeat.ps1'
     subprocess.Popen(["powershell.exe",path],stdout=sys.stdout)
     time.sleep(5)
 
