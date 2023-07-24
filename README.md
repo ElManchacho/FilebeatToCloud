@@ -189,7 +189,7 @@ Being able to have multiple Filebeat instances/services + create a management pa
 
 ### Disclaimer
 
-I don't to modify any file / folder content or name or the app could stop working
+I don't advise to modify any file / folder content or name or the app could stop working
 
 
 ##### Regards,
