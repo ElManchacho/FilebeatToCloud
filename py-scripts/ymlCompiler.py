@@ -3,7 +3,6 @@ from formatAnalyser import formatAnalyser
 from fieldsSetUpUi import defFields
 
 def ymlComipler(input, filbeatVersion):
-    print(input)
     basePath = os.getcwd().replace('py-scripts','')
     filebeatPath = basePath+'\\filebeat.yml'
     content = None
