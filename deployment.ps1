@@ -4,6 +4,10 @@ $filebeatVersion = "filebeat-8.8.2-windows-x86_64"
 
 $zipFile = $filebeatVersion+".zip"
 
+# Check if zip file has already been downloaded
+
+$existingZipFile = Test-Path $zipFile
+
 # deployment folder location instanciation
 
 $location = (Get-Location).Path
@@ -22,7 +26,10 @@ Add-Type -AssemblyName System.IO.Compression
 
 # download Filbeat installer
 
-Invoke-WebRequest -Uri "https://artifacts.elastic.co/downloads/beats/filebeat/$zipFile" -OutFile $location"\$zipFile"
+if ( !$existingZipFile )
+{
+    Invoke-WebRequest -Uri "https://artifacts.elastic.co/downloads/beats/filebeat/$zipFile" -OutFile $location"\$zipFile"
+}
 
 # unzip filbeat
 
