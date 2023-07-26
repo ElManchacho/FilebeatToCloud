@@ -39,7 +39,7 @@ def menuUi(filbeatVersion):
     
     def seeInstances():
         fenetre.destroy()
-        instanceListUi()
+        instanceListUi(filbeatVersion)
 
     def seeConfigs():
         fenetre.destroy()
