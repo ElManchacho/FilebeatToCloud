@@ -1,1 +1,1 @@
-Folder for generated filebeat configurations
+Folder for generated filebeat mappings configurations

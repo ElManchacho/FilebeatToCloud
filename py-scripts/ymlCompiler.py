@@ -2,7 +2,7 @@ import yaml, os
 from formatAnalyser import formatAnalyser
 from fieldsSetUpUi import defFields
 
-def ymlComipler(input, filbeatVersion):
+def ymlComipler(input, filbeatVersion, scriptCounter):
     basePath = os.getcwd().replace('py-scripts','')
     filebeatPath = basePath+'\\filebeat.yml'
     content = None
@@ -57,6 +57,9 @@ def ymlComipler(input, filbeatVersion):
         file.close()
 
     with open(basePath+'/'+filbeatVersion+'/filebeat.yml', 'w') as file:
+        documents = yaml.dump(content, file, sort_keys=False)
+
+    with open(basePath+'\\configs\\generated\\filebeat_'+str(scriptCounter)+'.yml', 'w') as file:
         documents = yaml.dump(content, file, sort_keys=False)
 
     return scriptPath

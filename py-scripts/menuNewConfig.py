@@ -178,10 +178,9 @@ def menuNewConfig(filbeatVersion):
       "separator": separatorInput.get() or ''
     }
     fenetre.destroy()
-    scriptPath = ymlComipler(dicoInput, filbeatVersion)
 
     basePath = os.getcwd().replace('py-scripts','')
-    fullpathConfigsFolder = basePath + "\\configs\\generated\\"
+    fullpathConfigsFolder = basePath + "\\configs\\mappings\\"
 
     scriptCounter = 0
 
@@ -192,6 +191,8 @@ def menuNewConfig(filbeatVersion):
       lastGeneratedScriptName = (existingFilebeatConfigs[-1].replace('filebeatConfig_','')).replace('.json','')
 
       scriptCounter =int(lastGeneratedScriptName) + 1
+    
+    scriptPath = ymlComipler(dicoInput, filbeatVersion, scriptCounter)
 
     content = {
       "scriptPath":scriptPath,

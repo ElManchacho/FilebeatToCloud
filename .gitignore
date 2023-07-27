@@ -6,5 +6,6 @@ __pycache__
 /Logs/test/*
 /filebeatScripts/generated/*.js
 /filebeatScripts/generated/headersConfigs/*.json
-/configs/generated/*.json
+/configs/generated/*.yml
+/configs/mappings/*.json
 .env
