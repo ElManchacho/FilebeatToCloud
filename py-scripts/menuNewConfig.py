@@ -192,14 +192,17 @@ def menuNewConfig(filbeatVersion):
 
       scriptCounter =int(lastGeneratedScriptName) + 1
     
-    scriptPath = ymlComipler(dicoInput, filbeatVersion, scriptCounter)
+    configPaths = ymlComipler(dicoInput, filbeatVersion, scriptCounter)
 
     content = {
-      "scriptPath":scriptPath,
+      "scriptPath":configPaths["scriptPath"],
+      "ymlPath":configPaths["ymlPath"],
       "headerPaths":[
         "test","test"
       ]
     }
+
+    
     with open(fullpathConfigsFolder+"filebeatConfig_"+str(scriptCounter)+".json", 'a') as file:
 
             file.write(json.dumps(content))

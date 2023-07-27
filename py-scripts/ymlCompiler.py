@@ -59,7 +59,9 @@ def ymlComipler(input, filbeatVersion, scriptCounter):
     with open(basePath+'/'+filbeatVersion+'/filebeat.yml', 'w') as file:
         documents = yaml.dump(content, file, sort_keys=False)
 
-    with open(basePath+'\\configs\\generated\\filebeat_'+str(scriptCounter)+'.yml', 'w') as file:
+    ymlFilePath = basePath+'\\configs\\generated\\filebeat_'+str(scriptCounter)+'.yml'
+
+    with open(ymlFilePath, 'w') as file:
         documents = yaml.dump(content, file, sort_keys=False)
 
-    return scriptPath
+    return {"scriptPath":scriptPath, "ymlPath":ymlFilePath}
