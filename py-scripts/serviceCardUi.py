@@ -55,11 +55,13 @@ def showServiceCard(serviceName):
 
     hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=1, columnspan=2, sticky="ws")
 
-    mainTitle = Label(fenetre, text="List of registered Filebeat services :",font='bold', pady=10).grid(row=1, column=1, columnspan=1)
+    serviceName = Label(fenetre, text="Name : "+selectedService.name,font='bold', pady=10).grid(row=1, column=1, columnspan=1)
 
     hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=2, column=1, columnspan=2, sticky="ws")
-        
-    hr0 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=11, padx=10, rowspan=11, columnspan=1, sticky="ws")
+    
+    serviceState = Label(fenetre, text="State : "+selectedService.state,font='bold', pady=10).grid(row=3, column=1, columnspan=1)
+
+    hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=4, column=1, columnspan=2, sticky="ws")
 
     def deleteService():
         selectedService.delete()
