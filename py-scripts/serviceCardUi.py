@@ -8,14 +8,18 @@ class ServiceCard:
 
     state : str
 
-    def __init__(self, serviceName):
-        self.name = serviceName
+    def initServiceData(self, serviceName):
         rawFilebeatService = [x for x in psutil.win_service_iter() if x.name().lower() == serviceName]
         svc = psutil.win_service_get(rawFilebeatService[0].name())
         self.name = svc.name()
         self.state = svc.status()
 
+    def __init__(self, serviceName):
+        self.initServiceData(serviceName)
 
+    def refreshServiceData(self):
+        self.initServiceData(self.name)
+    
     # TODO : Add Service description Card : Name, State (color ?), filebeat.yml config data, header mapping scripts,
     #        index name, check if endpoint is alive
 
@@ -25,7 +29,6 @@ class ServiceCard:
     #        not a global delete that would take the lastly selected service without observing the card
     
     def delete(self):
-        print(self.name)
         path = os.getcwd()+'\\custom-uninstall-service-filebeat.ps1' 
         subprocess.run(["powershell.exe",path+" -serviceName "+str(self.name)],stdout=sys.stdout)
 
@@ -59,7 +62,7 @@ def showServiceCard(serviceName):
 
     hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=2, column=1, columnspan=2, sticky="ws")
     
-    serviceState = Label(fenetre, text="State : "+selectedService.state,font='bold', pady=10).grid(row=3, column=1, columnspan=1)
+    serviceState = Label(fenetre, text="State : "+selectedService.state,font='bold', pady=10)
 
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=4, column=1, columnspan=2, sticky="ws")
 
@@ -67,8 +70,15 @@ def showServiceCard(serviceName):
         selectedService.delete()
         fenetre.destroy()
     
-    showCardButton = Button(fenetre, text='Delete',command=lambda: deleteService(), font=("black", 12)).grid(row=4, column=12, columnspan=2)
+    deleteServiceButton = Button(fenetre, text='Delete',command=lambda: deleteService(), font=("black", 12)).grid(row=4, column=11, columnspan=2)
 
-    # TODO : Add refresh button
+    def refreshService():
+        print(serviceState)
+        selectedService.refreshServiceData()
+        serviceState.config(text = "selectedService.state")
+
+    refreshServiceButton = Button(fenetre, text='Refresh',command=lambda: refreshService(), font=("black", 12)).grid(row=4, column=13, columnspan=2)
+
+    serviceState.grid(row=3, column=1, columnspan=1)
 
     fenetre.mainloop()
