@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import ttk
 
 def instanceListUi(filbeatVersion):
+
+    selectedService = {}
     
     rawFilebeatServices = [x for x in psutil.win_service_iter() if x.name().lower().startswith('filebeat')]
     filbeatServices = []
@@ -45,15 +47,16 @@ def instanceListUi(filbeatVersion):
         listServices = event.widget
         selection = [listServices.item(item)["values"] for item in listServices.selection()][0]
         service = {"name":selection[0], "state":selection[1]}
+        selectedService = service
 
     # TODO : Make "Delete Service" button match with selected Service's card,
     #        not a global delete that would take the lastly selected service without observing the card
     
-    def deleteService(serviceName):
-
+    def deleteService(service):
+        print(service)
         path = os.getcwd()+'\\custom-uninstall-service-filebeat.ps1' 
-        subprocess.run(["powershell.exe",path+" -serviceName "+serviceName],stdout=sys.stdout)
-        
+        subprocess.run(["powershell.exe",path+" -serviceName "+service["name"]],stdout=sys.stdout)
+    addPathButton = Button(fenetre, text='Add',command=lambda: deleteService(selectedService), font=("black", 12)).grid(row=7, column=1)
     listServices.bind("<<TreeviewSelect>>", selectService)
     listServices.grid(row=8, column=0, columnspan=10, sticky="ws")
 
