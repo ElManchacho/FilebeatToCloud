@@ -5,7 +5,7 @@ from serviceCardUi import showServiceCard, ServiceCard
 
 class instanceListUi:
 
-    selectedServiceName : str =''
+    selectedServiceName : str = ''
     
     serviceList : array = []
 
@@ -65,8 +65,12 @@ class instanceListUi:
             self.setSelectedServiceName(selection[0])
 
         def showCard():
-            showServiceCard(self.getSelectedService())
-            self.setList()
+            selectedName = self.getSelectedService()
+            if (selectedName != ''):
+                showServiceCard(self.getSelectedService())
+                self.setList()
+            # else message "Please select a Serivice first."
+
 
         hr0 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=11, padx=10, rowspan=11, columnspan=1, sticky="ws")
         showCardButton = Button(fenetre, text='Show service card',command=lambda: showCard(), font=("black", 12)).grid(row=4, column=12, columnspan=2)
