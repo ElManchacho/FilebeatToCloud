@@ -39,7 +39,8 @@ def menuUi(filbeatVersion):
     
     def seeInstances():
         fenetre.destroy()
-        instanceListUi(filbeatVersion)
+        serviceList = instanceListUi()
+        serviceList.buildPage()
 
     def seeConfigs():
         fenetre.destroy()

@@ -111,6 +111,10 @@ Start-Sleep -s 10
 
 pip install python-dotenv
 
+Start-Sleep -s 10
+
+pip install psutil
+
 py "./py-scripts/main.py" -p $filebeatVersion -Wait
 
 # renvoyer vers le cloud ou kibana
