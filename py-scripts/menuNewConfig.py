@@ -1,9 +1,11 @@
-import os, sys, time, fnmatch, json
+import os, sys, time, fnmatch, json, uuid
 from tkinter import *
 from tkinter import ttk
 from ymlCompiler import ymlComipler
 import subprocess
 from dotenv import load_dotenv
+
+from instanceListUi import instanceListUi
 
 class envChecked:
   _protected_elasticUrl : bool = False
@@ -147,7 +149,7 @@ def menuNewConfig(filbeatVersion):
   addPathButton = Button(fenetre, text='Add',command=lambda: addPath(), font=("black", 12)).grid(row=7, column=1)
   pathEntry.grid(row=7, column=0)
   listPath.grid(row=8, column=0, columnspan=2, sticky="we")
-  listPath.insert(0,os.getcwd().replace('py-scripts','Logs\\input'))
+  listPath.insert(0,os.getcwd()+'\\Logs\\test')
   deletePathButton = Button(fenetre, text='Delete path',command=lambda: delPath(), font=("black", 10)).grid(row=8, column=2)
 
   hr3 = ttk.Separator(fenetre, orient="vertical").grid(row=3, column=3, padx=10, rowspan=8, sticky="ns")
@@ -204,29 +206,27 @@ def menuNewConfig(filbeatVersion):
 
     
     with open(fullpathConfigsFolder+"filebeatConfig_"+str(scriptCounter)+".json", 'a') as file:
-
             file.write(json.dumps(content))
-    return None
   
     # TODO : Automatically instanciate the Filebeat service as a Windows Service
     # WARNING : Must be done with the custom service installer
-    path = os.getcwd()+'\\custom-install-service-filebeat.ps1' 
+    print(uuid.uuid4())
+    serviceName = 'filebeat'+str(uuid.uuid4())
+    path = os.getcwd()+'\\custom-install-service-filebeat.ps1 -serviceName '+serviceName
     subprocess.run(["powershell.exe",path],stdout=sys.stdout)
 
     # TODO : Start the service
 
     time.sleep(5)
 
-    subprocess.run(["powershell.exe",'Start-Service filebeat'],stdout=sys.stdout)
-
-    # TODO : Get service state
-
-    subprocess.run(["powershell.exe",'Get-Service filebeat'],stdout=sys.stdout)
+    subprocess.run(["powershell.exe",'Start-Service '+serviceName],stdout=sys.stdout)
 
     time.sleep(5)
-    
-    fenetre.destroy()
-    
+
+    serviceList = instanceListUi()
+    serviceList.buildPage()
+
+
   elasticUsername.grid(row=3, column=1)
   elasticPassword.grid(row=4, column=1)
   elasticUrl.grid(row=5,column=1)

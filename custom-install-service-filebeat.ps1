@@ -13,7 +13,7 @@ try {
   }
 }
 catch {
- "No service create yet, creating one right now ..."
+ "No service with such name created yet, creating one right now ..."
 }
 
 
