@@ -44,7 +44,7 @@ class ServiceCard:
         try:
             subprocess.run(["powershell.exe","Start-Service "+str(self.name)+" -ErrorVariable badoutput -ErrorAction SilentlyContinue"])
         except Exception as error:
-            print("error")
+            print(error)
     
 
     def stop(self):
@@ -82,11 +82,11 @@ class ServiceCard:
 
         hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=1, columnspan=2, sticky="ws")
 
-        serviceName = Label(fenetre, text="Name : "+self.name,font='bold', pady=10).grid(row=1, column=1, columnspan=14)
+        serviceName = Label(fenetre, text="Name : "+self.name,font='bold', pady=10, padx=10).grid(row=1, column=1, columnspan=15)
 
         hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=2, column=1, columnspan=2, sticky="ws")
         
-        serviceState = Label(fenetre, text="State : "+self.state,font='bold', pady=10)
+        serviceState = Label(fenetre, text="State : "+self.state,font='bold', pady=10, padx=10)
 
         hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=4, column=1, columnspan=2, sticky="ws")
 
@@ -95,9 +95,11 @@ class ServiceCard:
                 self.start()
                 refreshService()
             except Exception as error:
-                print("error")
+                print(error)
         
         sartServiceButton = Button(fenetre, text='Start',command=lambda: startService(), font=("black", 12)).grid(row=4, column=4)
+
+        hr4 = ttk.Separator(fenetre, orient="vertical").grid(row=4, column=5, padx=10, rowspan=1, columnspan=1, sticky="ws")
 
         def stopService():
             try :
@@ -108,6 +110,8 @@ class ServiceCard:
         
         stopServiceButton = Button(fenetre, text='Stop',command=lambda: stopService(), font=("black", 12)).grid(row=4, column=6)
 
+        hr5 = ttk.Separator(fenetre, orient="vertical").grid(row=4, column=7, padx=10, rowspan=1, columnspan=1, sticky="ws")
+
         def restartService():
             try :
                 self.restart()
@@ -116,6 +120,8 @@ class ServiceCard:
                 print(error)
         
         restartServiceButton = Button(fenetre, text='Restart',command=lambda: restartService(), font=("black", 12)).grid(row=4, column=8)
+
+        hr6 = ttk.Separator(fenetre, orient="vertical").grid(row=4, column=9, padx=10, rowspan=1, columnspan=1, sticky="ws")
 
         def deleteService():
             try :

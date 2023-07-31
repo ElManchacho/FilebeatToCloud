@@ -63,7 +63,7 @@ class instanceListUi:
         listServices.heading('service_name', text='Service name')
         listServices.heading('service_state', text='Service state')
 
-        def initListServices():
+        def initListServices(): # TODO : Update values of existing rows instead of overwritting every row, and replace deleted ones with "Deleted service" palceholder
             for row in listServices.get_children():
                 listServices.delete(row)
             self.setList()
@@ -80,13 +80,17 @@ class instanceListUi:
 
         def showCard():
             selectedName = self.getSelectedService()
+            initListServices()
             if (selectedName != ''):
-                self.setSelectedCard(ServiceCard(selectedName))
-                self.selectedCard.showServiceCard()
+                for svc in self.serviceList:
+                    if (svc['name'] == selectedName):
+                        self.setSelectedCard(ServiceCard(selectedName))
+                        self.selectedCard.showServiceCard()
+                        break;
             # else message "Please select a Service first."
 
 
-        hr0 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=11, padx=10, rowspan=11, columnspan=1, sticky="ws")
+        hr3 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=11, padx=10, rowspan=11, columnspan=1, sticky="ws")
         showCardButton = Button(fenetre, text='Show service card',command=lambda: showCard(), font=("black", 12)).grid(row=4, column=12, columnspan=2)
         refreshButton = Button(fenetre, text='Refresh',command=lambda: initListServices(), font=("black", 12)).grid(row=2, column=12, columnspan=2)
         listServices.bind("<<TreeviewSelect>>", selectService)
