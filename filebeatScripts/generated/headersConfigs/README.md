@@ -1,1 +1,1 @@
-Folder for generated filebeat scripts
+Folder for generated filebeat logs headers mapping configs
