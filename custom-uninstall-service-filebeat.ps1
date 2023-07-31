@@ -1,4 +1,4 @@
-param([String]$serviceName="filebeat")
+param([parameter(Mandatory=$true)][String]$serviceName)
 
 # Delete and stop the service if it already exists.
 if (Get-Service $serviceName -ErrorAction SilentlyContinue) {

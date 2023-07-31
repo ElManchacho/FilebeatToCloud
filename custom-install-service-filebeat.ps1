@@ -1,18 +1,22 @@
-param([String]$serviceName="filebeat")
+param([parameter(Mandatory=$false)][String]$serviceName = "filebeat")
 
-$serviceName = "filebeat"
+$filebeatVersion = "filebeat-8.8.2-windows-x86_64"
+
 $displayName = $serviceName.Replace($serviceName[0], $serviceName[0].ToString().ToUpper())
 
-$alreadyExists = (Get-Service $displayName).Name = $serviceName
-
-if ($alreadyExists)
-{
-  $serviceName = $serviceName+"_"+([guid]::NewGuid()).Guid
-  $displayName = $serviceName.Replace($serviceName[0], $serviceName[0].ToString().ToUpper())
+try {
+  $alreadyExists = (Get-Service $displayName).Name = $serviceName
+  if ($alreadyExists)
+  {
+    $serviceName = $serviceName+"_"+([guid]::NewGuid()).Guid
+    $displayName = $serviceName.Replace($serviceName[0], $serviceName[0].ToString().ToUpper())
+  }
+}
+catch {
+ "An error occurred"
 }
 
-$serviceName
-$displayName
+
 
 # Delete and stop the service if it already exists.
 if (Get-Service $serviceName -ErrorAction SilentlyContinue) {
@@ -27,7 +31,7 @@ $workdir = Split-Path $MyInvocation.MyCommand.Path
 # Create the new service.
 New-Service -name $serviceName `
   -displayName $displayName `
-  -binaryPathName "`"$workdir\filebeat.exe`" --environment=windows_service -c `"$workdir\filebeat.yml`" --path.home `"$workdir`" --path.data `"$env:PROGRAMDATA\filebeat`" --path.logs `"$env:PROGRAMDATA\filebeat\logs`" -E logging.files.redirect_stderr=true"
+  -binaryPathName "`"$workdir\$filebeatVersion\filebeat.exe`" --environment=windows_service -c `"$workdir\$filebeatVersion\filebeat.yml`" --path.home `"$workdir\$filebeatVersion`" --path.data `"$env:PROGRAMDATA\filebeat`" --path.logs `"$env:PROGRAMDATA\filebeat\logs`" -E logging.files.redirect_stderr=true"
 
 # Attempt to set the service to delayed start using sc config.
 Try {
