@@ -1,11 +1,13 @@
 import os, psutil, subprocess, array
 from tkinter import *
 from tkinter import ttk
-from serviceCardUi import showServiceCard, ServiceCard
+from serviceCardUi import ServiceCard
 
 class instanceListUi:
 
     selectedServiceName : str = ''
+
+    selectedCard : ServiceCard
     
     serviceList : array = []
 
@@ -25,6 +27,12 @@ class instanceListUi:
     
     def getSelectedService(self):
         return self.selectedServiceName
+
+    def setSelectedCard(self, card):
+        self.selectedCard = card
+    
+    def getSelectedCard(self):
+        return self.selectedCard
 
     def buildPage(self):
 
@@ -55,28 +63,35 @@ class instanceListUi:
         listServices.heading('service_name', text='Service name')
         listServices.heading('service_state', text='Service state')
 
-        for service in self.serviceList :
-            listServices.insert('', END, values=(service["name"], service["state"]))
-
-
+        def initListServices():
+            for row in listServices.get_children():
+                listServices.delete(row)
+            self.setList()
+            for service in self.serviceList :
+                listServices.insert('', END, values=(service["name"], service["state"]))
+            self.setSelectedServiceName('')
+            
         def selectService(event):
             listServices = event.widget
-            selection = [listServices.item(item)["values"] for item in listServices.selection()][0]
-            self.setSelectedServiceName(selection[0])
+            selection = [listServices.item(item)["values"] for item in listServices.selection()]
+            if (selection != []):
+                selection = [listServices.item(item)["values"] for item in listServices.selection()][0]
+                self.setSelectedServiceName(selection[0])
 
         def showCard():
             selectedName = self.getSelectedService()
             if (selectedName != ''):
-                showServiceCard(self.getSelectedService())
-                self.setList()
-            # else message "Please select a Serivice first."
+                self.setSelectedCard(ServiceCard(selectedName))
+                self.selectedCard.showServiceCard()
+            # else message "Please select a Service first."
 
 
         hr0 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=11, padx=10, rowspan=11, columnspan=1, sticky="ws")
         showCardButton = Button(fenetre, text='Show service card',command=lambda: showCard(), font=("black", 12)).grid(row=4, column=12, columnspan=2)
+        refreshButton = Button(fenetre, text='Refresh',command=lambda: initListServices(), font=("black", 12)).grid(row=2, column=12, columnspan=2)
         listServices.bind("<<TreeviewSelect>>", selectService)
-        listServices.grid(row=4, column=1, columnspan=10, sticky="ws")
-
+        listServices.grid(row=4, column=1, columnspan=10, rowspan=2, sticky="ws")
+        initListServices()
 
         # TODO : Add scrollbar to treeview
 

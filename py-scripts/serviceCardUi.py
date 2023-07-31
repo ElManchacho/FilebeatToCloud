@@ -17,8 +17,11 @@ class ServiceCard:
     def __init__(self, serviceName):
         self.initServiceData(serviceName)
 
-    def refreshServiceData(self):
-        self.initServiceData(self.name)
+    def getState(self):
+        return self.state
+
+    def setState(self, newState):
+        self.state = newState
     
     # TODO : Add Service description Card : Name, State (color ?), filebeat.yml config data, header mapping scripts,
     #        index name, check if endpoint is alive
@@ -29,56 +32,106 @@ class ServiceCard:
     #        not a global delete that would take the lastly selected service without observing the card
     
     def delete(self):
-        path = os.getcwd()+'\\custom-uninstall-service-filebeat.ps1' 
-        subprocess.run(["powershell.exe",path+" -serviceName "+str(self.name)],stdout=sys.stdout)
+        try:
+            path = os.getcwd()+'\\custom-uninstall-service-filebeat.ps1' 
+            subprocess.run(["powershell.exe", path+" -serviceName "+str(self.name)+" -ErrorVariable badoutput -ErrorAction SilentlyContinue"])
+            self.setState('deleted')
+        except Exception as error:
+            print(error)
+        
 
-
-# TODO : Create the Service card window
-
-def showServiceCard(serviceName):
+    def start(self):
+        try:
+            subprocess.run(["powershell.exe","Start-Service "+str(self.name)+" -ErrorVariable badoutput -ErrorAction SilentlyContinue"])
+        except Exception as error:
+            print("error")
     
-    selectedService = ServiceCard(serviceName)
 
-    fenetre = Tk()
+    def stop(self):
+        try:
+            subprocess.run(["powershell.exe","Stop-Service "+str(self.name)+" -ErrorVariable badoutput -ErrorAction SilentlyContinue"])
+        except Exception as error:
+            print(error)
 
-    w = 600
-    h = 700
+    def restart(self):
+        try:
+            subprocess.run(["powershell.exe","Restart-Service "+str(self.name)+" -ErrorVariable badoutput -ErrorAction SilentlyContinue"])
+        except Exception as error:
+            print(error)
 
-    ws = fenetre.winfo_screenwidth()
-    hs = fenetre.winfo_screenheight()
+    # TODO : Create the Service card window
 
-    x = (ws / 2) - (w / 2)
-    y = (hs / 2) - (h / 1.8)
+    def showServiceCard(self):
 
-    fenetre.geometry('%dx%d+%d+%d' % (w, h, x, y))
+        fenetre = Tk()
 
-    fenetre.title("FileBeatConfigurator")
+        w = 600
+        h = 700
 
-    hr0 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=0, padx=10, rowspan=11, columnspan=1, sticky="ws")
+        ws = fenetre.winfo_screenwidth()
+        hs = fenetre.winfo_screenheight()
 
-    hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=1, columnspan=2, sticky="ws")
+        x = (ws / 2) - (w / 2)
+        y = (hs / 2) - (h / 1.8)
 
-    serviceName = Label(fenetre, text="Name : "+selectedService.name,font='bold', pady=10).grid(row=1, column=1, columnspan=1)
+        fenetre.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
-    hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=2, column=1, columnspan=2, sticky="ws")
-    
-    serviceState = Label(fenetre, text="State : "+selectedService.state,font='bold', pady=10)
+        fenetre.title("FileBeatConfigurator")
 
-    hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=4, column=1, columnspan=2, sticky="ws")
+        hr0 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=0, padx=10, rowspan=11, columnspan=15, sticky="ws")
 
-    def deleteService():
-        selectedService.delete()
-        fenetre.destroy()
-    
-    deleteServiceButton = Button(fenetre, text='Delete',command=lambda: deleteService(), font=("black", 12)).grid(row=4, column=11, columnspan=2)
+        hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=1, columnspan=2, sticky="ws")
 
-    def refreshService():
-        print(serviceState)
-        selectedService.refreshServiceData()
-        serviceState.config(text = "selectedService.state")
+        serviceName = Label(fenetre, text="Name : "+self.name,font='bold', pady=10).grid(row=1, column=1, columnspan=14)
 
-    refreshServiceButton = Button(fenetre, text='Refresh',command=lambda: refreshService(), font=("black", 12)).grid(row=4, column=13, columnspan=2)
+        hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=2, column=1, columnspan=2, sticky="ws")
+        
+        serviceState = Label(fenetre, text="State : "+self.state,font='bold', pady=10)
 
-    serviceState.grid(row=3, column=1, columnspan=1)
+        hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=4, column=1, columnspan=2, sticky="ws")
 
-    fenetre.mainloop()
+        def startService():
+            try :
+                self.start()
+                refreshService()
+            except Exception as error:
+                print("error")
+        
+        sartServiceButton = Button(fenetre, text='Start',command=lambda: startService(), font=("black", 12)).grid(row=4, column=4)
+
+        def stopService():
+            try :
+                self.stop()
+                refreshService()
+            except Exception as error:
+                print(error)
+        
+        stopServiceButton = Button(fenetre, text='Stop',command=lambda: stopService(), font=("black", 12)).grid(row=4, column=6)
+
+        def restartService():
+            try :
+                self.restart()
+                refreshService()
+            except Exception as error:
+                print(error)
+        
+        restartServiceButton = Button(fenetre, text='Restart',command=lambda: restartService(), font=("black", 12)).grid(row=4, column=8)
+
+        def deleteService():
+            try :
+                self.delete()
+                fenetre.destroy()
+            except Exception as error:
+                print(error)
+        
+        deleteServiceButton = Button(fenetre, text='Delete',command=lambda: deleteService(), font=("black", 12)).grid(row=4, column=10)
+
+        def refreshService():
+            self.initServiceData(self.name)
+            serviceState.config(text="State : "+self.state)
+
+        refreshServiceButton = Button(fenetre, text='Refresh',command=lambda: refreshService(), font=("black", 12)).grid(row=2, column=15)
+
+        serviceState.grid(row=3, column=1, columnspan=1)
+
+        fenetre.mainloop()
