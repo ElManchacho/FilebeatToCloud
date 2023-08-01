@@ -4,6 +4,9 @@ import atexit
 import sys
 
 if __name__ == "__main__":
+
+    # Flush python cache
+
     atexit.register(cacheFlush)
     
     # faire en sorte d'avoir plusieurs configurations/instances de services
