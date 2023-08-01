@@ -6,8 +6,6 @@ $filebeatVersion = "filebeat-8.8.2-windows-x86_64"
 
 if(!([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
 
-    $location = (Get-Location).Path+'\py-scripts\main.py' # App starting script location
-
     # Launch py script with modal to ask for privileges in a powershell invocation
 
     try {
