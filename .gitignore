@@ -1,4 +1,5 @@
-# Unzipped folder
+# Zipped & unzipped folder
+filebeat-8.8.2-windows-x86_64.zip
 /filebeat-8.8.2-windows-x86_64/
 # Python install (necessary to run scripts)
 python-3.10.5-amd64.exe
