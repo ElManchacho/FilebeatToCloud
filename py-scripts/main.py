@@ -9,6 +9,6 @@ if __name__ == "__main__":
 
     atexit.register(cacheFlush)
     
-    # faire en sorte d'avoir plusieurs configurations/instances de services
+    # Start app's Menu, which takes one argument for filbeat version naming when calling the script
     
-    menuUi(sys.argv[2]) # takes one argument for filbeat version naming
+    menuUi(sys.argv[2])

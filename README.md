@@ -84,9 +84,9 @@ value1.10;value2.10;value3.10
 
 ```
 
-We can see 3 different logs formats here : not every field is filled.
+We can see 3 different logs formats here : not every field is filled for every line.
 
-That would be a problem with a simple Filebeat mapping configuration : the lines wihout the exact number of fields mapped would be ignored.
+That would be a problem with a simple Filebeat mapping configuration : the lines without the exact number of mapped fields would be ignored.
 
 
 ```value1.3;value2.3;value3.3``` --> OK

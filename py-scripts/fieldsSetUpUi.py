@@ -45,7 +45,7 @@ class defFields:
 
     labelInfo = Label(fenetre, text="\nThe following fields names were generated from your sample.\nFeel free to add / modify / delete the ones you don't judge coherent.  \n", background="#E1BD0C").grid(row=2, column=1, columnspan=3, rowspan=2)
 
-    fieldsTitle = Label(fenetre, text="Fields(s)",pady=10, font=('black', 12)).grid(row=6, column=1, sticky="ws")
+    fieldsTitle = Label(fenetre, text="Field(s)",pady=10, font=('black', 12)).grid(row=6, column=1, sticky="ws")
     addFieldsTitle = Label(fenetre, text="Add a log field :", pady=10).grid(row=7, column=1)
     fieldsEntry = Entry(fenetre, textvariable=str, width=30)
     listFields = Listbox(fenetre)
