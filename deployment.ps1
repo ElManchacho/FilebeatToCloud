@@ -47,11 +47,11 @@ Copy-Item -Path $location"\filebeat.yml" -Destination $location"\$filebeatVersio
 
 # download python 3.10.5 (last version on 08/07/2022)
 
-Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.10.5/python-3.10.5-amd64.exe" -OutFile $location"\python-3.10.5-amd64.exe"
+Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.10.5/python-3.11.0-amd64.exe" -OutFile $location"\python-3.11.0-amd64.exe"
 
 # install python
 
-Start-Process -Wait -FilePath $location"\python-3.10.5-amd64.exe"  -Argument "/silent" -PassThru
+Start-Process -Wait -FilePath $location"\python-3.11.0-amd64.exe"  -Argument "/silent" -PassThru
 
 # let time for python to install
 
@@ -59,7 +59,7 @@ Start-Sleep -s 15
 
 # delete python installer
 
-Remove-Item $location"\python-3.10.5-amd64.exe"
+Remove-Item $location"\python-3.11.0-amd64.exe"
 
 # download pip python installer script
 
