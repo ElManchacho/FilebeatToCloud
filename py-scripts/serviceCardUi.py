@@ -23,14 +23,6 @@ class ServiceCard:
     def setState(self, newState):
         self.state = newState
     
-    # TODO : Add Service description Card : Name, State (color ?), filebeat.yml config data, header mapping scripts,
-    #        index name, check if endpoint is alive
-
-    # TODO : Add possibility to Restart/Start/Stop/Delete services
-    
-    # TODO : Make "Delete Service" button match with selected Service's card,
-    #        not a global delete that would take the lastly selected service without observing the card
-    
     def delete(self):
         try:
             path = os.getcwd()+'\\custom-uninstall-service-filebeat.ps1' 
@@ -58,8 +50,6 @@ class ServiceCard:
             subprocess.run(["powershell.exe","Restart-Service "+str(self.name)+" -ErrorVariable badoutput -ErrorAction SilentlyContinue"])
         except Exception as error:
             print(error)
-
-    # TODO : Create the Service card window
 
     def showServiceCard(self):
 

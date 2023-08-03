@@ -63,7 +63,7 @@ class instanceListUi:
         listServices.heading('service_name', text='Service name')
         listServices.heading('service_state', text='Service state')
 
-        def initListServices(): # TODO : Update values of existing rows instead of overwritting every row, and replace deleted ones with "Deleted service" palceholder
+        def initListServices():
             for row in listServices.get_children():
                 listServices.delete(row)
             self.setList()
@@ -96,11 +96,5 @@ class instanceListUi:
         listServices.bind("<<TreeviewSelect>>", selectService)
         listServices.grid(row=4, column=1, columnspan=10, rowspan=2, sticky="ws")
         initListServices()
-
-        # TODO : Add scrollbar to treeview
-
-        # TODO : Add refresh button
-
-
 
         fenetre.mainloop()
