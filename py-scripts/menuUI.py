@@ -3,6 +3,7 @@ from tkinter import ttk
 from menuNewConfig import menuNewConfig
 from configListUi import configListUi
 from instanceListUi import instanceListUi
+from requirementsUi import RequirementsPage
 import os
 
 def menuUi(filbeatVersion):
@@ -22,7 +23,7 @@ def menuUi(filbeatVersion):
 
     fenetre.title("FileBeatConfigurator")
     
-    hr0 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=0, padx=10, rowspan=11, columnspan=1, sticky="ws")
+    hr0 = ttk.Separator(fenetre, orient="vertical").grid(row=0, column=0, padx=10, rowspan=12, columnspan=1, sticky="ws")
 
     hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=1, columnspan=2, sticky="ws")
 
@@ -32,7 +33,7 @@ def menuUi(filbeatVersion):
 
     scndTitle = Label(fenetre, text="Menu",font=('black', 15)).grid(row=3, column=1, columnspan=1)
 
-    hr2bis = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=4, column=1, columnspan=1, sticky="ws")
+    hr2bis = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=4, column=1, columnspan=1, sticky="ws")
 
     def newCgonfig():
         fenetre.destroy()
@@ -47,25 +48,7 @@ def menuUi(filbeatVersion):
         fenetre.destroy()
         configListUi()
 
-    versionsObjectList = [{"id":0, "version":"filebeat-8.2.1-windows-x86_64"},{"id":1, "version": "filebeat-8.8.2-windows-x86_64"}]
-
-    versionsList = []
-
-    currentPath = os.getcwd()
-
-    for versionObject in versionsObjectList:
-        installationPath = currentPath + '\\' + versionObject["version"]
-        if (os.path.exists(installationPath)):
-            versionsList.append(versionObject["version"]+" (installed)")
-        else:
-            versionsList.append(versionObject["version"]+" (not installed)")
-
-
-    baseOptionMenu = StringVar(fenetre)
-    baseOptionMenu.set(versionsList[0])
-    opt = OptionMenu(fenetre, baseOptionMenu, *versionsList).grid(pady=20, row=4, column=1)
-
-    addConf = Button(fenetre, text='Add a new\nFilebeat configuration', command=lambda: newCgonfig(), width=20, font=('black', 13), padx=10, pady=10).grid(row=5, column=1, columnspan=1)
+    addConf = Button(fenetre, text='Add a new\nFilebeat configuration', command=lambda: newCgonfig(), width=20, font=('black', 13), padx=10).grid(row=5, column=1, columnspan=1)
 
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=6, column=1, columnspan=2, sticky="ws")
 
@@ -77,5 +60,23 @@ def menuUi(filbeatVersion):
 
     hr5 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=10, column=1, columnspan=2, sticky="ws")
     
+    versionsObjectList = [{"id":0, "name":"filebeat-8.2.1-windows-x86_64", "version":"8.2.1"},{"id":1, "name": "filebeat-8.8.2-windows-x86_64", "version":"8.8.2"}]
+    versionsList = []
+    currentPath = os.getcwd()
+    for versionObject in versionsObjectList:
+        installationPath = currentPath + '\\' + versionObject["version"]
+        if (os.path.exists(installationPath)):
+            versionsList.append(versionObject["version"]+" (installed)")
+        else:
+            versionsList.append(versionObject["version"]+" (not installed)")
+    baseOptionMenu = StringVar(fenetre)
+    baseOptionMenu.set(versionsList[0])
+    opt = OptionMenu(fenetre, baseOptionMenu, *versionsList).grid(pady=20, row=10, column=0, columnspan=2)
+
+    def requirements():
+        serviceList = RequirementsPage()
+        serviceList.buildPage()
+
+    requirementsButton = Button(fenetre, text='Application requirements', command=lambda: requirements(), width=20, font=('black', 13), padx=10).grid(row=11, column=1, columnspan=2)
 
     fenetre.mainloop()
