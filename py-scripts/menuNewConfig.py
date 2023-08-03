@@ -210,7 +210,6 @@ def menuNewConfig(filbeatVersion):
   
     # TODO : Automatically instanciate the Filebeat service as a Windows Service
     # WARNING : Must be done with the custom service installer
-    print(uuid.uuid4())
     serviceName = 'filebeat'+str(uuid.uuid4())
     path = os.getcwd()+'\\custom-install-service-filebeat.ps1 -serviceName '+serviceName
     subprocess.run(["powershell.exe",path],stdout=sys.stdout)

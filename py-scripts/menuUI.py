@@ -54,7 +54,6 @@ def menuUi(filbeatVersion):
     currentPath = os.getcwd()
 
     for versionObject in versionsObjectList:
-        print(versionObject)
         installationPath = currentPath + '\\' + versionObject["version"]
         if (os.path.exists(installationPath)):
             versionsList.append(versionObject["version"]+" (installed)")
