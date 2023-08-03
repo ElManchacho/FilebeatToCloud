@@ -3,6 +3,7 @@ from tkinter import ttk
 from menuNewConfig import menuNewConfig
 from configListUi import configListUi
 from instanceListUi import instanceListUi
+import os
 
 def menuUi(filbeatVersion):
 
@@ -46,16 +47,35 @@ def menuUi(filbeatVersion):
         fenetre.destroy()
         configListUi()
 
-    versionsList = ["filebeat-8.8.2-windows-x86_64", "filebeat-8.2.1-windows-x86_64"]
+    versionsObjectList = [{"id":0, "version":"filebeat-8.2.1-windows-x86_64"},{"id":1, "version": "filebeat-8.8.2-windows-x86_64"}]
+
+    versionsList = []
+
+    currentPath = os.getcwd()
+
+    for versionObject in versionsObjectList:
+        print(versionObject)
+        installationPath = currentPath + '\\' + versionObject["version"]
+        if (os.path.exists(installationPath)):
+            versionsList.append(versionObject["version"]+" (installed)")
+        else:
+            versionsList.append(versionObject["version"]+" (not installed)")
+
+
     baseOptionMenu = StringVar(fenetre)
     baseOptionMenu.set(versionsList[0])
-    
     opt = OptionMenu(fenetre, baseOptionMenu, *versionsList).grid(pady=20, row=4, column=1)
+
     addConf = Button(fenetre, text='Add a new\nFilebeat configuration', command=lambda: newCgonfig(), width=20, font=('black', 13), padx=10, pady=10).grid(row=5, column=1, columnspan=1)
+
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=6, column=1, columnspan=2, sticky="ws")
+
     browseInstances = Button(fenetre, text='Browse among existing\nFilebeat instances', command=lambda: seeInstances(), width=20, font=('black', 13), padx=10).grid(row=7, column=1, columnspan=1)
+
     hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=8, column=1, columnspan=2, sticky="ws")
+
     browseConf = Button(fenetre, text='Browse among existing\nFilebeat configurations', command=lambda: seeConfigs(), width=20, font=('black', 13), padx=10).grid(row=9, column=1, columnspan=1)
+
     hr5 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=10, column=1, columnspan=2, sticky="ws")
     
 
