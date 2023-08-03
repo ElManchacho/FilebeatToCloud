@@ -8,7 +8,7 @@ def menuUi(filbeatVersion):
 
     fenetre = Tk()
 
-    w = 470
+    w = 380
     h = 480
 
     ws = fenetre.winfo_screenwidth()
@@ -25,7 +25,7 @@ def menuUi(filbeatVersion):
 
     hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=1, columnspan=2, sticky="ws")
 
-    mainTitle = Label(fenetre, text="Welcome on the FilbeatToCloud project app !",font='bold', pady=10).grid(row=1, column=1, columnspan=1)
+    mainTitle = Label(fenetre, text="Welcome on the FilbeatToCloud app !",font='bold', pady=10, anchor="center").grid(row=1, column=1, columnspan=1)
 
     hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=2, column=1, columnspan=2, sticky="ws")
 
@@ -52,5 +52,6 @@ def menuUi(filbeatVersion):
     hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=8, column=1, columnspan=2, sticky="ws")
     browseConf = Button(fenetre, text='Browse among existing\nFilebeat configurations', command=lambda: seeConfigs(), width=20, font=('black', 13), padx=10).grid(row=9, column=1, columnspan=1)
     hr5 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=10, column=1, columnspan=2, sticky="ws")
+    
 
     fenetre.mainloop()
