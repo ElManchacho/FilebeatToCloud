@@ -27,11 +27,11 @@ def menuUi(filbeatVersion):
 
     mainTitle = Label(fenetre, text="Welcome on the FilbeatToCloud app !",font='bold', pady=10, anchor="center").grid(row=1, column=1, columnspan=1)
 
-    hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=30, row=2, column=1, columnspan=2, sticky="ws")
+    hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=2, column=1, columnspan=2, sticky="ws")
 
     scndTitle = Label(fenetre, text="Menu",font=('black', 15)).grid(row=3, column=1, columnspan=1)
 
-    hr2bis = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=4, column=1, columnspan=2, sticky="ws")
+    hr2bis = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=4, column=1, columnspan=1, sticky="ws")
 
     def newCgonfig():
         fenetre.destroy()
@@ -46,7 +46,12 @@ def menuUi(filbeatVersion):
         fenetre.destroy()
         configListUi()
 
-    addConf = Button(fenetre, text='Add a new\nFilebeat configuration', command=lambda: newCgonfig(), width=20, font=('black', 13), padx=10).grid(row=5, column=1, columnspan=1)
+    versionsList = ["filebeat-8.8.2-windows-x86_64", "filebeat-8.2.1-windows-x86_64"]
+    baseOptionMenu = StringVar(fenetre)
+    baseOptionMenu.set(versionsList[0])
+    
+    opt = OptionMenu(fenetre, baseOptionMenu, *versionsList).grid(pady=20, row=4, column=1)
+    addConf = Button(fenetre, text='Add a new\nFilebeat configuration', command=lambda: newCgonfig(), width=20, font=('black', 13), padx=10, pady=10).grid(row=5, column=1, columnspan=1)
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=6, column=1, columnspan=2, sticky="ws")
     browseInstances = Button(fenetre, text='Browse among existing\nFilebeat instances', command=lambda: seeInstances(), width=20, font=('black', 13), padx=10).grid(row=7, column=1, columnspan=1)
     hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=8, column=1, columnspan=2, sticky="ws")
