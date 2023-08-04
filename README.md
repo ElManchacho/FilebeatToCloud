@@ -9,7 +9,7 @@ An easy way to add a Filebeat configuration to your system
 
 This app currently runs with the the following Filebeat versions :
 
-- [8.2.1](https://www.elastic.co/downloads/past-releases/filebeat-8-3-1)
+- [8.3.1](https://www.elastic.co/downloads/past-releases/filebeat-8-3-1)
 
 - [8.8.2](https://www.elastic.co/downloads/past-releases/filebeat-8-8-2)
 

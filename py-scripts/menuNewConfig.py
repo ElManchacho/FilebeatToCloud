@@ -109,6 +109,8 @@ def menuNewConfig(filbeatVersion):
   hr1 = ttk.Separator(fenetre, orient="horizontal").grid(pady=6, row=0, column=0, columnspan=6, sticky="ws")
 
   mainTitle = Label(fenetre, text="Configure your Filebeat environnement",font=('bold', 20)).grid(row=1, column=0, columnspan=3)
+  
+  usedFilebeatVersion = Label(fenetre, text="Used version is : "+filbeatVersion["version"], font=('bold', 13)).grid(row=2, column=0, columnspan=3)
 
   hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=2, column=0, columnspan=6, sticky="ws")
 
@@ -194,7 +196,7 @@ def menuNewConfig(filbeatVersion):
 
       scriptCounter =int(lastGeneratedScriptName) + 1
     
-    configPaths = ymlComipler(dicoInput, filbeatVersion, scriptCounter)
+    configPaths = ymlComipler(dicoInput, filbeatVersion["name"], scriptCounter)
 
     content = {
       "scriptPath":configPaths["scriptPath"],

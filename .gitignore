@@ -1,6 +1,6 @@
 # Zipped & unzipped folder
 *.zip
-/filebeat-8.8.2-windows-x86_64/
+/filebeat-*
 # Python install (necessary to run scripts)
 python-3.10.5-amd64.exe
 __pycache__

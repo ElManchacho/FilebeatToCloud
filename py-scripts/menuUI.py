@@ -6,7 +6,7 @@ from instanceListUi import instanceListUi
 from requirementsUi import RequirementsPage
 import os
 
-def menuUi(filbeatVersion):
+def menuUi(filbeatVersion, pythonVersion, pipVersion, pipPyyaml, pipPythonDotenv, pipPsutil):
 
     fenetre = Tk()
 
@@ -35,7 +35,7 @@ def menuUi(filbeatVersion):
 
     hr2bis = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=4, column=1, columnspan=1, sticky="ws")
 
-    def newCgonfig():
+    def newCgonfig(filbeatVersion):
         fenetre.destroy()
         menuNewConfig(filbeatVersion)
     
@@ -48,7 +48,49 @@ def menuUi(filbeatVersion):
         fenetre.destroy()
         configListUi()
 
-    addConf = Button(fenetre, text='Add a new\nFilebeat configuration', command=lambda: newCgonfig(), width=20, font=('black', 13), padx=10).grid(row=5, column=1, columnspan=1)
+    
+    versionsObjectList = [{"id":0, "name":"filebeat-8.3.1-windows-x86_64", "version":"8.3.1"}, {"id":1, "name": "filebeat-8.8.2-windows-x86_64", "version":"8.8.2"}]
+    versionsList = []
+    currentPath = os.getcwd()
+    atLeastOneInstalled = False
+
+    for versionObject in versionsObjectList:
+
+        installationPath = currentPath + '\\' + versionObject["name"]
+
+        if (os.path.exists(installationPath)):
+
+            if (versionObject["name"] == filbeatVersion and not atLeastOneInstalled):
+
+                versionsList.insert(0, versionObject["version"]+" (installed)")
+                atLeastOneInstalled = True
+                
+            else:
+
+                versionsList.append(versionObject["version"]+" (installed)")
+
+            versionObject['installed'] = True
+
+        else:
+
+            versionsList.append(versionObject["version"]+" (not installed)")
+            versionObject['installed'] = False
+    
+    baseOptionMenu = StringVar(fenetre)
+    baseOptionMenu.set(versionsList[0])
+    opt = OptionMenu(fenetre, baseOptionMenu, *versionsList).grid(pady=20, row=10, column=0, columnspan=2)
+
+    def requirements(versionsObjectList, versionsList):
+        serviceList = RequirementsPage(versionsObjectList, versionsList, pythonVersion, pipVersion, pipPyyaml, pipPythonDotenv, pipPsutil)
+        serviceList.buildPage()
+
+    def getSelectedVersion():
+        listSelector = baseOptionMenu.get()
+        for versionObject in versionsObjectList:
+            if (versionObject["version"] in listSelector):
+                return versionObject
+
+    addConf = Button(fenetre, text='Add a new\nFilebeat configuration', command=lambda: newCgonfig(getSelectedVersion()), width=20, font=('black', 13), padx=10).grid(row=5, column=1, columnspan=1)
 
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=6, column=1, columnspan=2, sticky="ws")
 
@@ -60,23 +102,6 @@ def menuUi(filbeatVersion):
 
     hr5 = ttk.Separator(fenetre, orient="horizontal").grid(pady=20, row=10, column=1, columnspan=2, sticky="ws")
     
-    versionsObjectList = [{"id":0, "name":"filebeat-8.2.1-windows-x86_64", "version":"8.2.1"},{"id":1, "name": "filebeat-8.8.2-windows-x86_64", "version":"8.8.2"}]
-    versionsList = []
-    currentPath = os.getcwd()
-    for versionObject in versionsObjectList:
-        installationPath = currentPath + '\\' + versionObject["version"]
-        if (os.path.exists(installationPath)):
-            versionsList.append(versionObject["version"]+" (installed)")
-        else:
-            versionsList.append(versionObject["version"]+" (not installed)")
-    baseOptionMenu = StringVar(fenetre)
-    baseOptionMenu.set(versionsList[0])
-    opt = OptionMenu(fenetre, baseOptionMenu, *versionsList).grid(pady=20, row=10, column=0, columnspan=2)
-
-    def requirements():
-        serviceList = RequirementsPage()
-        serviceList.buildPage()
-
-    requirementsButton = Button(fenetre, text='Application requirements', command=lambda: requirements(), width=20, font=('black', 13), padx=10).grid(row=11, column=1, columnspan=2)
+    requirementsButton = Button(fenetre, text='Application requirements', command=lambda: requirements(versionsObjectList, versionsList), width=20, font=('black', 13), padx=10).grid(row=11, column=1, columnspan=2)
 
     fenetre.mainloop()

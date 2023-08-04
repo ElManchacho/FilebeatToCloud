@@ -93,9 +93,6 @@ $envVariables = [System.Environment]::GetEnvironmentVariable(
     'Machine'
 )
 
-$test = 'Jalon'
-
-$test
 "path : " + $envVariables
 "pipPath : " + $pipPath
 
