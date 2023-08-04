@@ -3,7 +3,7 @@ from tkinter import ttk
 from requirementsUi import RequirementsPage
 import os
 
-def poorMenuUi():
+def poorMenuUi(pythonVersion, pipVersion, pipPyyaml, pipPythonDotenv, pipPsutil):
 
     fenetre = Tk()
 
@@ -44,8 +44,8 @@ def poorMenuUi():
             versionsList.append(versionObject["version"]+" (not installed)")
             versionObject['installed'] = False
    
-    def requirements(versionsObjectList, versionsList, pythonVersion, pipVersion, pipPyyaml, pipPythonDotenv, pipPsutil):
-        serviceList = RequirementsPage(versionsObjectList, versionsList)
+    def requirements(versionsObjectList, versionsList):
+        serviceList = RequirementsPage(versionsObjectList, versionsList, pythonVersion, pipVersion, pipPyyaml, pipPythonDotenv, pipPsutil)
         fenetre.destroy()
         serviceList.buildPage()
 
