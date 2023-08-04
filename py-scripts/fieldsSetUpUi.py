@@ -93,6 +93,7 @@ class defFields:
     hr3 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=11, column=1, columnspan=6, sticky="ws")
     labelConfigCount = Label(fenetre, text='Indicate the number of fields\nconfiguration your logs may encounter').grid(row=12, column=1, padx=10)
     entryConfigCount = Entry(fenetre, justify='center', width=10)
+    entryConfigCount.insert(END, '1')
     sendButton = Button(fenetre, text='Configure fields order', command=lambda: validateFields(entryConfigCount.get()), width=20, font=('black', 13), padx=10).grid(row=13, column=2, columnspan=2)
     entryConfigCount.grid(row=13, column=1, padx=10)
     hr4 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=14, column=1, columnspan=6, sticky="ws")
