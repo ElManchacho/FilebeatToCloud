@@ -1,5 +1,7 @@
 function process(event) {
 
+    var okScriptMessage = 'Filebeat script successfully executed.'
+
     var message = event.Get("message");
 
     if(message.charAt(message.length-1) == ";" || message.charAt(message.length-1) == ",")
@@ -58,12 +60,15 @@ function process(event) {
 
     if (logCols != headersLength) // Add empty headers for missing one in input (compare with logs columns)
     {
+        var unidentified = 0
         for (var index = 0; index < logCols - headersLength ; index++){
             headers.push({
                 'title':'<emptyHeaderName'+String(index)+'>',
                 'position':(logCols - headersLength) + index 
             })
+            unidentified += 1
         }
+        okScriptMessage += ' '+String(unidentified)+' unidentified raw(s) log line confifiguration. Still pushed.'
         
     }
 
@@ -71,7 +76,7 @@ function process(event) {
         event.Put('parsed.'+headers[indexField]['title'], field);
     });
 
-    event.Put('script.message', 'Filebeat script successfully executed')
+    event.Put('script.message', okScriptMessage)
     event.Put('script.executionState', 'OK')
     
     return event;
