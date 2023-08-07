@@ -51,7 +51,7 @@ class loadEnv:
   def getPassword(self):
     return self._protected_password
 
-def menuNewConfig(filbeatVersion):
+def menuNewConfig(filebeatVersion):
 
   fenetre = Tk()
 
@@ -110,7 +110,7 @@ def menuNewConfig(filbeatVersion):
 
   mainTitle = Label(fenetre, text="Configure your Filebeat environnement",font=('bold', 20)).grid(row=1, column=0, columnspan=3)
   
-  usedFilebeatVersion = Label(fenetre, text="Used version is : "+filbeatVersion["version"], font=('bold', 13)).grid(row=2, column=0, columnspan=3)
+  usedFilebeatVersion = Label(fenetre, text="Used version is : "+filebeatVersion["version"], font=('bold', 13)).grid(row=2, column=0, columnspan=3)
 
   hr2 = ttk.Separator(fenetre, orient="horizontal").grid(pady=10, row=2, column=0, columnspan=6, sticky="ws")
 
@@ -196,7 +196,7 @@ def menuNewConfig(filbeatVersion):
 
       scriptCounter =int(lastGeneratedScriptName) + 1
     
-    configPaths = ymlComipler(dicoInput, filbeatVersion["name"], scriptCounter)
+    configPaths = ymlComipler(dicoInput, filebeatVersion["name"], scriptCounter)
 
     content = {
       "scriptPath":configPaths["scriptPath"],
@@ -211,7 +211,7 @@ def menuNewConfig(filbeatVersion):
             file.write(json.dumps(content))
   
     serviceName = 'filebeat'+str(uuid.uuid4())
-    path = os.getcwd()+'\\custom-install-service-filebeat.ps1 -serviceName '+serviceName
+    path = os.getcwd()+'\\custom-install-service-filebeat.ps1 -serviceName '+serviceName+' -filebeatVersion ' + filebeatVersion["name"]
     subprocess.run(["powershell.exe",path],stdout=sys.stdout)
 
     time.sleep(5)

@@ -1,6 +1,7 @@
-param([parameter(Mandatory=$false)][String]$serviceName = "filebeat")
-
-$filebeatVersion = "filebeat-8.8.2-windows-x86_64"
+param(
+  [parameter(Mandatory=$false)][String]$serviceName = "filebeat",
+  [parameter(Mandatory=$false)][String]$filebeatVersion = "filebeat"
+)
 
 $displayName = $serviceName.Replace($serviceName[0], $serviceName[0].ToString().ToUpper())
 
